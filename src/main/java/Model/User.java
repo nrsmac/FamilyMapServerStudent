@@ -1,7 +1,7 @@
 package Model;
 
-public class User {
-    private String user_name;
+public class User implements IModelElement{
+    private String username;
     private String password;
     private String email;
     private String first_name;
@@ -9,14 +9,14 @@ public class User {
     private String gender;
     private String user_id;
 
-    public User(String user_name,
+    public User(String username,
                 String password,
                 String email,
                 String first_name,
                 String last_name,
                 String gender,
                 String user_id) {
-        this.user_name = user_name;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.first_name = first_name;
@@ -25,8 +25,8 @@ public class User {
         this.user_id = user_id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {

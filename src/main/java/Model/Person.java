@@ -1,8 +1,8 @@
 package Model;
 
-public class Person {
+public class Person implements IModelElement{
     private String person_id;
-    private String associated_username;
+    private String username;
     private String first_name;
     private String last_name;
     private String father_id;
@@ -10,14 +10,14 @@ public class Person {
     private String spouse_id;
 
     public Person(String person_id,
-                  String associated_username,
+                  String username,
                   String first_name,
                   String last_name,
                   String father_id,
                   String mother_id,
                   String spouse_id) {
         this.person_id = person_id;
-        this.associated_username = associated_username;
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.father_id = father_id;
@@ -29,8 +29,8 @@ public class Person {
         return person_id;
     }
 
-    public String getAssociated_username() {
-        return associated_username;
+    public String getUsername() {
+        return username;
     }
 
     public String getFirst_name() {

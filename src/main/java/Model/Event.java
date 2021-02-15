@@ -1,8 +1,8 @@
 package Model;
 
-public class Event {
+public class Event implements IModelElement{
     private String event_id;
-    private String associatedUsername;
+    private String username;
     private String associatedPersonId;
     private String latitude;
     private String longitude;
@@ -11,9 +11,9 @@ public class Event {
     private String eventType;
     private String year;
 
-    public Event(String event_id, String associatedUsername, String associatedPersonId, String latitude, String longitude, String country, String city, String eventType, String year) {
+    public Event(String event_id, String username, String associatedPersonId, String latitude, String longitude, String country, String city, String eventType, String year) {
         this.event_id = event_id;
-        this.associatedUsername = associatedUsername;
+        this.username = username;
         this.associatedPersonId = associatedPersonId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -27,8 +27,8 @@ public class Event {
         return event_id;
     }
 
-    public String getAssociatedUsername() {
-        return associatedUsername;
+    public String getUsername() {
+        return username;
     }
 
     public String getAssociatedPersonId() {
