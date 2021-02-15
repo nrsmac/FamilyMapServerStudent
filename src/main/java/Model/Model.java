@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,7 @@ import java.util.ArrayList;
  */
 public class Model {
     private DataAccess access;
+    private ArrayList<IModelElement> elements;
     private ArrayList<User> users;
     private ArrayList<Person> persons;
     private ArrayList<Event> events;
@@ -16,7 +18,12 @@ public class Model {
      */
     public Model(DataAccess access) {
         this.access = access;
-        this.users = access.getUsers();
+        try {
+            this.elements = access.doTransaction();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("Transaction threw SQL Error");
+        }
     }
 
     /**

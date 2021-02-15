@@ -25,31 +25,52 @@ public class Person implements IModelElement{
         this.spouse_id = spouse_id;
     }
 
-    public String getPerson_id() {
+    /**
+     * @return the unique id associated with this person of a user's pedigree (not null)
+     */
+    public String getPersonId() {
         return person_id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getFirst_name() {
+    /**
+     * @return the first name of this person (not null)
+     */
+    public String getFirstName() {
         return first_name;
     }
 
-    public String getLast_name() {
+    /**
+     * @return the last name of this person (not null)
+     */
+    public String getLastName() {
         return last_name;
     }
 
-    public String getFather_id() {
+    /**
+     * @return the id of this persons father (can be null)
+     */
+    public String getFatherId() {
         return father_id;
     }
 
-    public String getMother_id() {
+    /**
+     * @return the id of this persons father (can be null)
+     */
+    public String getMotherId() {
         return mother_id;
     }
 
-    public String getSpouse_id() {
+    /**
+     * @return id of this persons spouse (can be null)
+     */
+    public String getSpouseId() {
         return spouse_id;
+    }
+
+    /**
+     * @return the associated username with the element.
+     */
+    public String getUsername() {
+        return null;
     }
 }
