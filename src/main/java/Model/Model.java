@@ -1,5 +1,7 @@
 package Model;
 
+import DataAccess.DataAccess;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class Model {
     private ArrayList<Event> events;
     /**
      * Creates a reflection of database contents accessible within the server.
-     * @param access takes in a Model.DataAccess object to recreate the database structure within the project.
+     * @param access takes in a DataAccess.DataAccess object to recreate the database structure within the project.
      */
     public Model(DataAccess access) {
         this.access = access;
@@ -27,7 +29,7 @@ public class Model {
     }
 
     /**
-     * Updates model via Model.DataAccess.
+     * Updates model via DataAccess.DataAccess.
      */
     public void updateModel(){
 

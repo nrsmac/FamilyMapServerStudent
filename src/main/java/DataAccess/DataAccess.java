@@ -1,4 +1,6 @@
-package Model;
+package DataAccess;
+
+import Model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,6 +15,7 @@ public class DataAccess {
     ArrayList<User> users;
     ArrayList<Event> events;
     ArrayList<Person> persons;
+    ArrayList<AuthToken> authTokens;
 
     public DataAccess(){
         this.elements = new ArrayList<>();
