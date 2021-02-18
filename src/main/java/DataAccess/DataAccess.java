@@ -7,18 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Responsible for all JDBC operations, including creating connections, transactions and the following operations:
- * insert, update, delete and select
+ * Driver for all JDBC interactions with the DAO objects
  */
 public class DataAccess {
-    ArrayList<IModelElement> elements;
-    ArrayList<User> users;
-    ArrayList<Event> events;
-    ArrayList<Person> persons;
-    ArrayList<AuthToken> authTokens;
+    ArrayList<UserDao> users;
+    ArrayList<PersonDao> persons;
+    ArrayList<EventDao> events;
 
     public DataAccess(){
-        this.elements = new ArrayList<>();
+
     }
 
     /**
