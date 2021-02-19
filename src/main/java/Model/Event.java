@@ -6,53 +6,80 @@ import java.util.ArrayList;
  * Represents a unique event which happened to a Person within a User's pedigree.
  */
 public class Event implements IModelElement{
-    private String eventId;
+    /**
+     * Unique event id identifier. Primary key.
+     */
+    private String event_id;
+    /**
+     *
+     */
     private String username;
-    private ArrayList<String> associatedPersonIds;
-    private String latitude;
-    private String longitude;
+    /**
+     *
+     */
+    private ArrayList<String> associated_person_ids;
+    /**
+     *
+     */
+    private double latitude;
+    /**
+     *
+     */
+    private double longitude;
+    /**
+     *
+     */
     private String country;
+    /**
+     *
+     */
     private String city;
-    private String eventType;
+    /**
+     *
+     */
+    private String event_type;
+    /**
+     *
+     */
     private String year;
 
-    public Event(String eventId, String username, ArrayList<String> associatedPersonIds, String latitude, String longitude, String country, String city, String eventType, String year) {
-        this.eventId = eventId;
+    public Event(String eventId, String username, ArrayList<String> associatedPersonIds, double latitude, double longitude, String country, String city, String event_type, String year) {
+        this.event_id = eventId;
         this.username = username;
-        this.associatedPersonIds = new ArrayList<>(associatedPersonIds);
+        this.associated_person_ids = new ArrayList<>(associatedPersonIds);
         this.latitude = latitude;
         this.longitude = longitude;
         this.country = country;
         this.city = city;
-        this.eventType = eventType;
+        this.event_type = event_type;
         this.year = year;
     }
 
     /**
      * @return the unique id of this event
      */
-    public String getEventId() {
-        return eventId;
+    public String getEvent_id() {
+        return event_id;
     }
 
     /**
      * @return the person associated with this event
      */
-    public ArrayList<String> getAssociatedPersonIds() {
-        return associatedPersonIds;
+    public ArrayList<String> getAssociated_person_ids() {
+        return associated_person_ids;
     }
 
     /**
      * @return the latitude where this event occurred
      */
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
     /**
      * @return the longitude where this event occurred
      */
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -73,8 +100,8 @@ public class Event implements IModelElement{
     /**
      * @return the type of event this event is
      */
-    public String getEventType() {
-        return eventType;
+    public String getEvent_type() {
+        return event_type;
     }
 
     /**

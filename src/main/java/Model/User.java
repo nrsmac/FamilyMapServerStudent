@@ -5,28 +5,31 @@ package Model;
  * Stores user data: username, password, email, first and last name, gender, and a unique userId.
  */
 public class User implements IModelElement{
-    private String username;
+    /**
+     *
+     */
+    private String username; //TODO javadoc for every field
     private String password;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String first_name;
+    private String last_name;
     private String gender;
-    private String userId;
+    private String user_id;
 
     public User(String username,
                 String password,
                 String email,
-                String firstName,
-                String lastName,
+                String first_name,
+                String last_name,
                 String gender,
-                String userId) {
+                String user_id) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.gender = gender;
-        this.userId = userId;
+        this.user_id = user_id;
     }
 
     /**
@@ -46,15 +49,15 @@ public class User implements IModelElement{
     /**
      * @return the first name of the user
      */
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
     /**
      * @return the last name of the user
      */
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
     /**
@@ -67,8 +70,8 @@ public class User implements IModelElement{
     /**
      * @return the unique user id of the user which relates to Person and Event objects
      */
-    public String getUserId() {
-        return userId;
+    public String getUser_id() {
+        return user_id;
     }
 
     /**

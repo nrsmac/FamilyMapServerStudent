@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Driver for all JDBC interactions with the DAO objects
+ * Represents the sql database.
  */
-public class DataAccess {
+public class Database {
     ArrayList<UserDao> users;
     ArrayList<PersonDao> persons;
     ArrayList<EventDao> events;
 
-    public DataAccess(){
+    public Database(){
 
     }
 

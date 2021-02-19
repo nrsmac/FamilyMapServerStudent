@@ -6,16 +6,34 @@ import java.util.ArrayList;
  * Represents an authToken locally within the model.
  */
 public class AuthToken implements IModelElement{
+    /**
+     *
+     */
     private String username;
-    private String authToken;
+    /**
+     *
+     */
+    private String auth_token;
+    /**
+     *
+     */
     private ArrayList<String> usedAuthTokens;
 
-    public AuthToken(String username, String authToken, Model model){
+    /**
+     * Instantiates a new Auth token.
+     *
+     * @param username   the username
+     * @param auth_token the auth token
+     * @param model      the model
+     */
+    public AuthToken(String username, String auth_token, Model model){
         this.username = username;
-        this.authToken = authToken;
+        this.auth_token = auth_token;
     }
 
     /**
+     * Generate auth token string.
+     *
      * @return an an authToken which has not already been used
      */
     public static String generateAuthToken(){
@@ -32,9 +50,12 @@ public class AuthToken implements IModelElement{
     }
 
     /**
+     * Gets auth token.
+     *
+     * @param username the username
      * @return authToken associated with username
      */
     public String getAuthToken(String username) {
-        return authToken;
+        return auth_token;
     }
 }

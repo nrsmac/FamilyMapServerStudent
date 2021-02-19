@@ -1,6 +1,6 @@
 package Model;
 
-import DataAccess.DataAccess;
+import DataAccess.Database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Represents the database in the context of the Java web server.
  */
 public class Model {
-    private DataAccess access;
+    private Database access;
     private ArrayList<IModelElement> elements;
     private ArrayList<User> users;
     private ArrayList<Person> persons;
@@ -18,7 +18,7 @@ public class Model {
      * Creates a reflection of database contents accessible within the server.
      * @param access takes in a DataAccess.DataAccess object to recreate the database structure within the project.
      */
-    public Model(DataAccess access) {
+    public Model(Database access) {
         this.access = access;
         try {
             this.elements = access.doTransaction();
