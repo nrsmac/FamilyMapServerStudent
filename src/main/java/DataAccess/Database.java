@@ -7,24 +7,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Represents the sql database.
+ * Represents the sql database. Called by the DAOs.
  */
 public class Database {
-    ArrayList<UserDao> users;
-    ArrayList<PersonDao> persons;
-    ArrayList<EventDao> events;
+    Connection connection;
 
-    public Database(){
+    /**
+     * Instantiates a new Database.
+     *
+     * @param connection the connection to the sql database
+     */
+    public Database(Connection connection){
 
     }
 
     /**
      * Performs a database transaction which includes resetting all tables, resetting the auto-increment primary key sequences,
      * inserting Elements, people and events, updating all info, and retrieving the resulting information.
+     *
      * @return resulting model elements.
      * @throws SQLException if sql error occurs.
      */
-
     public ArrayList<IModelElement> doTransaction() throws SQLException {
         return new ArrayList<>();
     }
@@ -37,6 +40,11 @@ public class Database {
         return new ArrayList<>();
     }
 
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
     public static void main(String[] args){
 
     }
