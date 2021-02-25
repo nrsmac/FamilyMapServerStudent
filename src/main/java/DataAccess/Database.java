@@ -2,23 +2,84 @@ package DataAccess;
 
 import Model.*;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  * Represents the sql database. Called by the DAOs.
  */
 public class Database {
-    Connection connection;
+    private Connection connection;
+
 
     /**
-     * Instantiates a new Database.
-     *
-     * @param connection the connection to the sql database
+     * Called before every change to our database to open the connection.
+     * Statements created by that connection are used to initiate transactions.
+     * @return Connection
      */
-    public Database(Connection connection){
+    public Connection openConnection() throws DataAccessException {
+        try {
+            final String CONNECTION_URL = "jdbc:sqlite:database.db";
+            connection = DriverManager.getConnection(CONNECTION_URL);
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to open connection to database.");
+        }
+        return connection;
+    }
 
+    public Connection getConnection() throws DataAccessException {
+        if(connection== null){
+            return openConnection();
+        } else {
+            return connection;
+        }
+    }
+
+    /**
+     * When we are done manipulating, we need to close the connection
+     * End the connection and allow us to commit our changes or to rollback.
+     * @param commit determines if we commit changes or rollback.
+     * @throws DataAccessException on sql error
+     */
+    public void closeConnection(boolean commit) throws DataAccessException{
+        try {
+            if (commit) {
+                //Commit changes
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+
+            connection.close();
+            connection = null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Unable to close database connection");
+        }
+    }
+
+    /**
+     * Clears all tables
+     * @throws DataAccessException when sql error encountered
+     */
+    public void clearTables() throws DataAccessException{
+        try (Statement stmt = connection.createStatement()){
+            String sql = "" +
+                    "DELETE FROM users; " +
+                    "DELETE FROM events;" +
+                    "DELETE FROM persons;" +
+                    "DELETE FROM auth_tokens;";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("SQL error while clearing tables");
+        }
     }
 
     /**

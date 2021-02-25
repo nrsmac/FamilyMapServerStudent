@@ -16,13 +16,14 @@ public class User implements IModelElement{
     private String gender;
     private String user_id;
 
-    public User(String username,
+    public User(String user_id,
+                String username,
                 String password,
                 String email,
                 String first_name,
                 String last_name,
-                String gender,
-                String user_id) {
+                String gender
+                ) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -31,7 +32,6 @@ public class User implements IModelElement{
         this.gender = gender;
         this.user_id = user_id;
     }
-
     /**
      * @return the password of the user
      */
@@ -88,5 +88,23 @@ public class User implements IModelElement{
 
     public String toString(){
         return "";
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o==null){
+            return false;
+        }
+        if (o instanceof User){
+            User oUser = (User) o;
+            return oUser.getUser_id().equals(getUser_id()) &&
+                    oUser.getUsername().equals(getUsername()) &&
+                    oUser.getEmail().equals(getEmail()) &&
+                    oUser.getFirst_name().equals(getFirst_name())&&
+                    oUser.getLast_name().equals(getLast_name())&&
+                    oUser.getGender().equals(getGender());
+        } else {
+            return false;
+        }
     }
 }
