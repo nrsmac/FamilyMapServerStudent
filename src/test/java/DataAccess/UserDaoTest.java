@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,17 +38,47 @@ class UserDaoTest {
     }
 
     @Test
-    void retrieveUsers() {
-        //TODO Implement
+    void insertFail() throws DataAccessException {
+        uDao.insertUser(bestUser);
+        assertThrows(DataAccessException.class, ()-> uDao.insertUser(bestUser));
+    }
+
+
+    @Test
+    void findPass() throws DataAccessException {
+        uDao.insertUser(bestUser);
+        User test = uDao.find(bestUser.getUser_id());
+        assertNotNull(test);
+        assertEquals(bestUser, test);
     }
 
     @Test
-    void find() {
-        //TODO Implement
+    void findFail() throws DataAccessException {
+        User userNotThere = new User("1234","s2cool","4821","shaun@shaun.com","Shaun","the Sheep","m");
+        assertThrows(DataAccessException.class, ()-> uDao.find(userNotThere.getUser_id()));
     }
 
     @Test
-    void clearUsers() {
-        //TODO Implement
+    void getUserCount() throws DataAccessException{
+        assertEquals(uDao.getUserCount(),0);
+        User userNotThere = new User("1234","s2cool","4821","shaun@shaun.com","Shaun","the Sheep","m");
+        uDao.insertUser(bestUser);
+        uDao.insertUser(userNotThere);
+        assertEquals(uDao.getUserCount(), 2);
+    }
+
+
+    @Test
+    void clearUsersPass() throws DataAccessException {
+        User user1 = new User("1234","s2cool","4821","shaun@shaun.com","Shaun","the Sheep","m");
+        uDao.insertUser(bestUser);
+        uDao.insertUser(user1);
+        uDao.clearUsers();
+        assertEquals(uDao.getUserCount(),0);
+    }
+
+    @Test
+    void clearUsersFail() {
+        assertThrows(DataAccessException.class, ()-> uDao.clearUsers());
     }
 }

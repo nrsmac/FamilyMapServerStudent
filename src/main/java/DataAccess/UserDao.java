@@ -45,18 +45,6 @@ public class UserDao implements IDao{
     }
 
     /**
-     * Get all users in database
-     * @return all users in database
-     */
-    public TreeSet<User> retrieveUsers(){
-        TreeSet<User> users = new TreeSet<User>();
-
-        //TODO implement. call find
-
-        return users;
-    }
-
-    /**
      * Find a user in database given id. If multiple (SHOULDN'T HAPPEN), returns top result
      * @param user_id of user to find
      * @return found user
@@ -79,6 +67,7 @@ public class UserDao implements IDao{
                         rs.getString("gender"));
                 return user;
             }
+            throw new DataAccessException();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException();
@@ -92,20 +81,35 @@ public class UserDao implements IDao{
                 }
             }
         }
-        return null;
     }
 
     /**
      * Clears all users from database
      */
     public void clearUsers() throws DataAccessException{
-        String sql = "TRUNCATE TABLE user";
+        String sql = "TRUNCATE TABLE users";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException();
         }
+    }
+
+    public int getUserCount() throws DataAccessException {
+        int rowCount = 0;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM users";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                rowCount++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException();
+        }
+        return rowCount;
     }
 
     public int hashCode(){
