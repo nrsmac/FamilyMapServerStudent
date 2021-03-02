@@ -15,6 +15,9 @@ import java.util.TreeSet;
  * Called by the Service classes.
  */
 public class PersonDao implements IDao{
+    /**
+     * The connection to the database
+     */
     private final Connection connection;
 
     public PersonDao(Connection connection){
