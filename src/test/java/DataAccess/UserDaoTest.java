@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,18 +66,13 @@ class UserDaoTest {
         assertEquals(uDao.getUserCount(), 2);
     }
 
-
     @Test
-    void clearUsersPass() throws DataAccessException {
+    void clearUsers() throws DataAccessException {
         User user1 = new User("1234","s2cool","4821","shaun@shaun.com","Shaun","the Sheep","m");
         uDao.insertUser(bestUser);
         uDao.insertUser(user1);
+        assertEquals(uDao.getUserCount(),2);
         uDao.clearUsers();
         assertEquals(uDao.getUserCount(),0);
-    }
-
-    @Test
-    void clearUsersFail() {
-        assertThrows(DataAccessException.class, ()-> uDao.clearUsers());
     }
 }

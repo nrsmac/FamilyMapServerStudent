@@ -27,7 +27,6 @@ public class PersonDao implements IDao{
      * @param person the person to be added
      */
     public void insertPerson(Person person) throws DataAccessException {
-        //TODO implement
         String sql = "INSERT INTO persons (person_id, username, first_name, last_name, gender, father_id, mother_id, spouse_id) VALUES(?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, person.getPersonId());
@@ -89,7 +88,7 @@ public class PersonDao implements IDao{
      * Clears all persons from database
      */
     public void clearPersons() throws DataAccessException{
-        String sql = "TRUNCATE TABLE persons";
+        String sql = "DELETE FROM persons";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.executeUpdate();
         } catch (SQLException e) {

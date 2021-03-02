@@ -74,10 +74,25 @@ public class Person implements IModelElement{
      * @return the associated username with the element.
      */
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     public String getGender() {
         return this.gender;
     }
+
+    @Override
+    public boolean equals(Object o){
+        //TODO maybe more intense here
+        if (o==null){
+            return false;
+        }
+        if (o instanceof Person){
+            Person oPerson = (Person) o;
+            return oPerson.getPersonId().equals(getPersonId());
+        } else {
+            return false;
+        }
+    }
+
 }

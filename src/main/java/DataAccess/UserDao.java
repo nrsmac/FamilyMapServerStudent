@@ -87,7 +87,7 @@ public class UserDao implements IDao{
      * Clears all users from database
      */
     public void clearUsers() throws DataAccessException{
-        String sql = "TRUNCATE TABLE users";
+        String sql = "DELETE FROM users";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.executeUpdate();
         } catch (SQLException e) {
