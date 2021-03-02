@@ -2,6 +2,7 @@ package Model;
 
 import DataAccess.Database;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

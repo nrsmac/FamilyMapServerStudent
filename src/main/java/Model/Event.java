@@ -1,11 +1,10 @@
 package Model;
 
-import java.util.ArrayList;
-
 /**
  * Represents a unique event which happened to a Person within a User's pedigree.
  */
 public class Event implements IModelElement{
+    private String person_id;
     /**
      * Unique event id identifier. Primary key.
      */
@@ -14,10 +13,6 @@ public class Event implements IModelElement{
      *
      */
     private String username;
-    /**
-     *
-     */
-    private ArrayList<String> associated_person_ids;
     /**
      *
      */
@@ -43,10 +38,10 @@ public class Event implements IModelElement{
      */
     private String year;
 
-    public Event(String eventId, String username, ArrayList<String> associatedPersonIds, double latitude, double longitude, String country, String city, String event_type, String year) {
+    public Event(String eventId, String username, String personId, double latitude, double longitude, String country, String city, String event_type, String year) {
         this.event_id = eventId;
         this.username = username;
-        this.associated_person_ids = new ArrayList<>(associatedPersonIds);
+        this.person_id = personId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.country = country;
@@ -65,9 +60,7 @@ public class Event implements IModelElement{
     /**
      * @return the person associated with this event
      */
-    public ArrayList<String> getAssociated_person_ids() {
-        return associated_person_ids;
-    }
+    public String getPerson_id(){return person_id;}
 
     /**
      * @return the latitude where this event occurred
@@ -124,5 +117,19 @@ public class Event implements IModelElement{
 
     public String toString(){
         return "";
+    }
+
+    @Override
+    public boolean equals(Object o){
+        //TODO maybe more intense here
+        if (o==null){
+            return false;
+        }
+        if (o instanceof Event){
+            Event oPerson = (Event) o;
+            return oPerson.getEvent_id().equals(getEvent_id());
+        } else {
+            return false;
+        }
     }
 }

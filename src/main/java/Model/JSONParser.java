@@ -1,3 +1,5 @@
+package Model;
+
 import Model.Model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,16 +11,11 @@ import java.util.Scanner;
  * Manages all JSON activity.
  */
 public class JSONParser {
-    Model model;
-
-    public JSONParser(Model model) {
-        this.model = model;
-    }
 
     /**
-     * Exports the current model to 'model.json'.
+     * Generates a json file at "model.json"
      */
-    public void createJsonFile(){
+    public void modelToJson(Model model){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonStr = gson.toJson(model);
         try{
@@ -36,17 +33,19 @@ public class JSONParser {
     }
 
     /**
-     * Updates the model based on JSON file
+     * Returns a model from json
      */
-    public void refreshModelFromJson(){
-        try (FileReader fileReader = new FileReader("model.json")) {
+    public Model jsonToModel(File jsonFile){
+        try (FileReader fileReader = new FileReader(jsonFile)) {
             Gson gson = new Gson();
-            this.model = gson.fromJson(fileReader, Model.class);
+            return gson.fromJson(fileReader, Model.class);
         } catch (FileNotFoundException e) {
             System.out.println("File not found while parsing JSON");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("File error while reading JSON file");
         }
+        return null;
     }
+
 }

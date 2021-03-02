@@ -70,7 +70,7 @@ public class UserDao implements IDao{
             throw new DataAccessException();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException();
+            throw new DataAccessException("Issue retrieving user from database");
         } finally {
             if (rs!=null){
 
@@ -110,13 +110,5 @@ public class UserDao implements IDao{
             throw new DataAccessException();
         }
         return rowCount;
-    }
-
-    public int hashCode(){
-        return 0;
-    }
-
-    public String toString(){
-        return "";
     }
 }
