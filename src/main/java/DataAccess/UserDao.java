@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TreeSet;
 
 /**
@@ -27,7 +28,6 @@ public class UserDao implements IDao{
      * @param user the user to be added
      */
     public void insertUser(User user) throws DataAccessException {
-        //TODO implement
         String sql = "INSERT INTO users (user_id, username, password, email, first_name, last_name, gender) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUser_id());
@@ -111,4 +111,52 @@ public class UserDao implements IDao{
         }
         return rowCount;
     }
+
+    public boolean containsUser(User user) throws DataAccessException {
+        boolean contains = false;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM users";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+                rs = stmt.executeQuery();
+                while (rs.next()){
+                    User daoUser = new User(rs.getString("user_id"),
+                            rs.getString("username"),
+                            rs.getString("password"),
+                            rs.getString("email"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("gender"));
+                    if(daoUser.equals(user)){
+                        contains = true;
+                        return contains;
+                    }
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException();
+        }
+
+        return contains;
+    }
+
+    public String generateUserId() throws DataAccessException {
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(0);
+        ResultSet rs = null;
+        String sql = "SELECT * FROM users";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ids.add(Integer.parseInt(rs.getString("user_id")));
+                //TODO: assert this is always an integer!!!!
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException();
+        }
+        Collections.sort(ids);
+        int highest_id = ids.get(ids.size()-1);
+        highest_id++;
+        return highest_id + "";
+    };
 }

@@ -115,7 +115,7 @@ public class User implements IModelElement{
         }
         if (o instanceof User){
             User oUser = (User) o;
-            return oUser.getUser_id().equals(getUser_id()) &&
+            return
                     oUser.getUsername().equals(getUsername()) &&
                     oUser.getEmail().equals(getEmail()) &&
                     oUser.getFirst_name().equals(getFirst_name())&&

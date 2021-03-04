@@ -5,28 +5,48 @@ import Model.Model;
 /**
  * A register response sent from the service to the handler
  */
-public class RegisterResponse implements IResponse{
-    /**
-     * Represents the model passed from the service
-     */
-    private Model model;
-
-
-    /**
-     * Instantiates a new Register response.
-     *
-     * @param model the model passed from the service.
-     */
-    public RegisterResponse(Model model){
-        this.model = model;
+public class RegisterResponse implements IResponse {
+    public RegisterResponse(String authToken, String username, String personId, boolean success) {
+        this.authToken = authToken;
+        this.username = username;
+        this.personId = personId;
+        this.success = success;
     }
 
-    /**
-     * Gets response model.
-     *
-     * @return the response model
-     */
-    public Model getResponseModel() {
-        return this.model;
+    public RegisterResponse(boolean success, String message){
+        this.success = success;
+        this.message = message;
     }
+
+    private String authToken;
+    private String username;
+    private String personId;
+    private boolean success;
+
+    private String message;
+
+    public RegisterResponse() {
+
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
 }

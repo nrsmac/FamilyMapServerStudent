@@ -1,12 +1,9 @@
 package GenerateData;
 
-import Model.JSONParser;
 import Model.Person;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class GeneratePeople {
