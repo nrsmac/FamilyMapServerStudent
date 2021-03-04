@@ -53,7 +53,7 @@ public class GenerateEvents {
         double longitude;
         String country;
         String city;
-        String year;
+        int year;
 
         Collections.shuffle(this.ids);
         int id = this.ids.pop();
@@ -66,7 +66,7 @@ public class GenerateEvents {
         city = location.getCity();
 
         Random rand = new Random();//TODO check parents birthdays
-        year = rand.nextInt((2021-1600)+1)+1600 + "";
+        year = rand.nextInt((2021-1600)+1)+1600;
 
         Event event = new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
         events.add(event);
@@ -80,7 +80,7 @@ public class GenerateEvents {
         double longitude;
         String country;
         String city;
-        String year;
+        int year;
 
         Collections.shuffle(this.ids);
         int id = this.ids.pop();
@@ -95,7 +95,7 @@ public class GenerateEvents {
         int birthYear = getBirthYear(person);
 
         Random rand = new Random();
-        year = rand.nextInt((2021-birthYear)+1)+birthYear + "";
+        year = rand.nextInt((2021-birthYear)+1)+birthYear;
 
 
         Event event = new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
@@ -170,7 +170,7 @@ public class GenerateEvents {
         int birthYear = 0;
         for (Event event : this.events){
             if(event.getPerson_id() == person.getPersonId() && event.getEvent_type().equals("birth")){
-                birthYear = Integer.parseInt(event.getYear());
+                birthYear = event.getYear();
             }
         }
         return birthYear;

@@ -10,35 +10,35 @@ public class Event implements IModelElement{
      */
     private String event_id;
     /**
-     *
+     *username associated with event
      */
     private String username;
     /**
-     *
-     */
-    private double latitude;
-    /**
-     *
-     */
-    private double longitude;
-    /**
-     *
-     */
-    private String country;
-    /**
-     *
-     */
-    private String city;
-    /**
-     *
+     * type of event
      */
     private String event_type;
     /**
-     *
+     * latitude where event took place
      */
-    private String year;
+    private double latitude;
+    /**
+     * longitude where event took place
+     */
+    private double longitude;
+    /**
+     * country where event took place
+     */
+    private String country;
+    /**
+     * city where event took place
+     */
+    private String city;
+    /**
+     * year event took place
+     */
+    private int year;
 
-    public Event(String eventId, String username, String personId, double latitude, double longitude, String country, String city, String event_type, String year) {
+    public Event(String eventId, String username, String personId, double latitude, double longitude, String country, String city, String event_type, int year) {
         this.event_id = eventId;
         this.username = username;
         this.person_id = personId;
@@ -100,7 +100,7 @@ public class Event implements IModelElement{
     /**
      * @return the year the event occurred
      */
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 

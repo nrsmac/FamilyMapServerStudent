@@ -6,14 +6,32 @@ package Model;
  */
 public class User implements IModelElement{
     /**
-     *
+     * Username of user
      */
-    private String username; //TODO javadoc for every field
+    private String username;
+    /**
+     * password of user
+     */
     private String password;
+    /**
+     * Email of user
+     */
     private String email;
+    /**
+     * first name of user
+     */
     private String first_name;
+    /**
+     * last name of user
+     */
     private String last_name;
+    /**
+     * Gender of user "m" if male, "f" if female
+     */
     private String gender;
+    /**
+     * ID of user
+     */
     private String user_id;
 
     public User(String user_id,

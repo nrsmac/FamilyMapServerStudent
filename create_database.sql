@@ -21,7 +21,7 @@ CREATE TABLE events(
 	longitude double(255),
 	country varchar(255),   
 	city varchar(255),   
-	year varchar(255), 
+	year INTEGER,
 	FOREIGN KEY (username) REFERENCES users(username)	
 );
 
@@ -38,8 +38,7 @@ CREATE TABLE persons (
 );
 
 CREATE TABLE auth_tokens (
-	auth_id varchar(255) NOT NULL primary key,
-	username varchar(255) not null,
+	username varchar(255) not null primary key,
 	auth_token varchar(255) not null,
 	foreign key (username) references users(username)
 );

@@ -37,13 +37,6 @@ public class Model {
     }
 
     /**
-     * @return users in model
-     */
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    /**
      * @return persons in model
      */
     public ArrayList<Person> getPersons() {

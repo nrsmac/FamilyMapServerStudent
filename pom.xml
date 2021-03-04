@@ -31,6 +31,11 @@
             <version>1</version>
             <systemPath>${basedir}/libs/FMSTestingObf.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
 
 

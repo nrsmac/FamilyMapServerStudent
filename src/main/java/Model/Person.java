@@ -1,13 +1,37 @@
 package Model;
 
 public class Person implements IModelElement{
+    /**
+     * person id
+     */
     private String person_id;
+    /**
+     * username associated with person
+     */
     private String username;
+    /**
+     * First name of person.
+     */
     private String first_name;
+    /**
+     * Last name of person.
+     */
     private String last_name;
+    /**
+     * ID of the father
+     */
     private String father_id;
+    /**
+     * ID Of the mother
+     */
     private String mother_id;
+    /**
+     * ID of the spouse
+     */
     private String spouse_id;
+    /**
+     * "m" if male, "f" if female
+     */
     private String gender;
 
     public Person(String person_id,

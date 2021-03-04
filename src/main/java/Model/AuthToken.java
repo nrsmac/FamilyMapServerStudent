@@ -14,10 +14,6 @@ public class AuthToken implements IModelElement{
      *
      */
     private String auth_token;
-    /**
-     *
-     */
-    private ArrayList<String> usedAuthTokens;
 
     /**
      * Instantiates a new Auth token.
@@ -41,20 +37,6 @@ public class AuthToken implements IModelElement{
         return "";
     }
 
-    /**
-     * @return username associated with authToken
-     */
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Gets auth token.
-     *
-     * @param username the username
-     * @return authToken associated with username
-     */
     public String getAuthToken(String username) {
         return auth_token;
     }

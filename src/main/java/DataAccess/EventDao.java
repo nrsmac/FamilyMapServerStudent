@@ -35,7 +35,7 @@ public class EventDao implements IDao{
             stmt.setDouble(6, event.getLongitude());
             stmt.setString(7, event.getCountry());
             stmt.setString(8, event.getCity());
-            stmt.setString(9, event.getYear());
+            stmt.setInt(9, event.getYear());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error inserting into events");
@@ -64,7 +64,7 @@ public class EventDao implements IDao{
                         rs.getString("longitude"),
                         rs.getString("country"),
                         rs.getString("city"),
-                        rs.getString("year"));
+                        rs.getInt("year"));
                 return event;
             }
             throw new DataAccessException("Requested event not found");
@@ -109,7 +109,7 @@ public class EventDao implements IDao{
                         rs.getString("longitude"),
                         rs.getString("country"),
                         rs.getString("city"),
-                        rs.getString("year"));
+                        rs.getInt("year"));
                 events.add(event);
             }
             return events;
@@ -153,7 +153,7 @@ public class EventDao implements IDao{
                         rs.getString("longitude"),
                         rs.getString("country"),
                         rs.getString("city"),
-                        rs.getString("year"));
+                        rs.getInt("year"));
                 events.add(event);
             }
             return events;
