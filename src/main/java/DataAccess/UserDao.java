@@ -139,24 +139,24 @@ public class UserDao implements IDao{
         return contains;
     }
 
-    public String generateUserId() throws DataAccessException {
-        ArrayList<Integer> ids = new ArrayList<>();
-        ids.add(0);
-        ResultSet rs = null;
-        String sql = "SELECT * FROM users";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                ids.add(Integer.parseInt(rs.getString("user_id")));
-                //TODO: assert this is always an integer!!!!
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException();
-        }
-        Collections.sort(ids);
-        int highest_id = ids.get(ids.size()-1);
-        highest_id++;
-        return highest_id + "";
-    };
+//    public String generateUserId() throws DataAccessException {
+//        ArrayList<Integer> ids = new ArrayList<>();
+//        ids.add(0);
+//        ResultSet rs = null;
+//        String sql = "SELECT * FROM users";
+//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//            rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                ids.add(Integer.parseInt(rs.getString("user_id")));
+//                //TODO: assert this is always an integer!!!!
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new DataAccessException();
+//        }
+//        Collections.sort(ids);
+//        int highest_id = ids.get(ids.size()-1);
+//        highest_id++;
+//        return highest_id + "";
+//    };
 }

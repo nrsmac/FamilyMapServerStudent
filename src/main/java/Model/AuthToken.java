@@ -20,9 +20,8 @@ public class AuthToken implements IModelElement{
      *
      * @param username   the username
      * @param auth_token the auth token
-     * @param model      the model
      */
-    public AuthToken(String username, String auth_token, Model model){
+    public AuthToken(String username, String auth_token){
         this.username = username;
         this.auth_token = auth_token;
     }
@@ -37,7 +36,8 @@ public class AuthToken implements IModelElement{
         return "";
     }
 
-    public String getAuthToken(String username) {
-        return auth_token;
+    public String getAuthToken() {
+        return this.auth_token;
     }
+    public String getUsername() { return this.username; }
 }

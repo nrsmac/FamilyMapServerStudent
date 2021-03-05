@@ -3,13 +3,17 @@ package Services;
 import DataAccess.*;
 import Model.Model;
 import Model.User;
+import Model.AuthToken;
 import Request.RegisterRequest;
 import Response.RegisterResponse;
+
+import java.util.UUID;
 
 /**
  * Processes registration via DAOs as directed by requests, and passes responses to the register handler
  */
 public class RegisterService {
+    private AuthTokenDao authDao;
     private Database db;
     /**
      * The request from the handler
@@ -48,7 +52,8 @@ public class RegisterService {
         boolean success = false;
         try {
             userDao = new UserDao(db.getConnection());
-            String userId = userDao.generateUserId();
+            authDao = new AuthTokenDao(db.getConnection());
+            String userId = UUID.randomUUID().toString();
             User user = new User(userId,
                     request.getUsername(),
                     request.getPassword(),
@@ -57,8 +62,10 @@ public class RegisterService {
                     request.getLastName(),
                     request.getGender());
             if(!userDao.containsUser(user)){
+                AuthToken token = new AuthToken(request.getUsername(),UUID.randomUUID().toString());
                 userDao.insertUser(user);
-                this.response = new RegisterResponse("authtoken goes here", user.getUsername(), userId, true);
+                authDao.add(token);
+                this.response = new RegisterResponse(token.getAuthToken(), user.getUsername(), userId, true);
             } else {
                 this.response = new RegisterResponse(false, "User already exists"); //user already exists
             }
