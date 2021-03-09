@@ -17,7 +17,6 @@ public class LoadHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         if(exchange.getRequestMethod().equalsIgnoreCase("post")){
             Headers reqHeaders = exchange.getRequestHeaders();
-            if(reqHeaders.containsKey("Authorization")){
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = Codex.readString(reqBody);
                 LoadRequest request = Json.deserialize(reqData,LoadRequest.class);
@@ -30,6 +29,5 @@ public class LoadHandler implements HttpHandler {
                 Codex.writeString(respData, respBody);
                 exchange.getResponseBody().close();
             }
-        }
     }
 }

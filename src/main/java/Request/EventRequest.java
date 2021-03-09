@@ -2,20 +2,20 @@ package Request;
 
 public class EventRequest {
 
-    private String authToken;
+    private String authtoken;
     private String eventID;
 
-    public EventRequest(String authToken) {
-        this.authToken = authToken;
+    public EventRequest(String authtoken) {
+        this.authtoken = authtoken;
     }
 
-    public EventRequest(String authToken, String eventID) {
-        this.authToken = authToken;
+    public EventRequest(String authtoken, String eventID) {
+        this.authtoken = authtoken;
         this.eventID = eventID;
     }
 
-    public String getAuthToken() {
-        return this.authToken;
+    public String getAuthtoken() {
+        return this.authtoken;
     }
 
     public String getEventID() {

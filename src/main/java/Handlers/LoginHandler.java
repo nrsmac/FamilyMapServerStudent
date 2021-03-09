@@ -19,7 +19,6 @@ public class LoginHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().equalsIgnoreCase("post")){
             Headers reqHeaders = exchange.getRequestHeaders();
-            if(reqHeaders.containsKey("Authorization")) {
                 //String authToken = reqHeaders.getFirst("Authorization");
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = Codex.readString(reqBody);
@@ -31,8 +30,9 @@ public class LoginHandler implements HttpHandler {
                 String respData = Json.serialize(response);
                 OutputStream respBody = exchange.getResponseBody();
                 Codex.writeString(respData, respBody);
+
                 exchange.getResponseBody().close();
-            }
+
         }
     }
 }

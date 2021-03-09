@@ -5,7 +5,6 @@ import Model.AuthToken;
 import Model.Event;
 import Request.EventRequest;
 import Response.EventResponse;
-import Response.PersonResponse;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class EventService {
             EventDao eDao = new EventDao(conn);
             AuthTokenDao aDao = new AuthTokenDao(conn);
 
-            String authKey = request.getAuthToken();
+            String authKey = request.getAuthtoken();
                 AuthToken authToken = aDao.findByAuthtoken(authKey);
                 String username = authToken.getAssociatedUsername();
 

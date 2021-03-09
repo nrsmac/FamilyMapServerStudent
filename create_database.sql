@@ -1,7 +1,7 @@
 DROP TABLE users;
 DROP TABLE events;
 DROP TABLE persons;
-DROP TABLE auth_tokens;
+DROP TABLE authtokens;
 CREATE TABLE users(
 	user_id varchar(255) not null primary key, /*TODO make sure these match in the model members */
 	username varchar(255) not null,

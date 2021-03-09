@@ -1,20 +1,20 @@
 package Request;
 
 public class PersonRequest {
-    private String authToken;
+    private String authtoken;
     private String personID;
 
-    public PersonRequest(String authToken) {
-        this.authToken = authToken;
+    public PersonRequest(String authtoken) {
+        this.authtoken = authtoken;
     }
 
-    public PersonRequest(String authToken, String personID) {
-        this.authToken = authToken;
+    public PersonRequest(String authtoken, String personID) {
+        this.authtoken = authtoken;
         this.personID = personID;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
     public String getPersonID() {

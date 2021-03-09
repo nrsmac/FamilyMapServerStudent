@@ -19,7 +19,6 @@ public class RegisterHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().toLowerCase().equals("post")) {
             Headers reqHeaders = exchange.getRequestHeaders();
-            if (reqHeaders.containsKey("Authorization")) {
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = Codex.readString(reqBody);
                 //Create request object and pass to service
@@ -33,7 +32,7 @@ public class RegisterHandler implements HttpHandler {
                 OutputStream respBody = exchange.getResponseBody();
                 Codex.writeString(respData, respBody);
                 exchange.getResponseBody().close();
-            }
+
         }
     }
 

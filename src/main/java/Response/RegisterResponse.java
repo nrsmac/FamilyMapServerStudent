@@ -1,13 +1,11 @@
 package Response;
 
-import Model.Model;
-
 /**
  * A register response sent from the service to the handler
  */
 public class RegisterResponse implements IResponse {
-    public RegisterResponse(String authToken, String username, String personId, boolean success) {
-        this.authToken = authToken;
+    public RegisterResponse(String authtoken, String username, String personId, boolean success) {
+        this.authtoken = authtoken;
         this.username = username;
         this.personId = personId;
         this.success = success;
@@ -18,7 +16,7 @@ public class RegisterResponse implements IResponse {
         this.message = message;
     }
 
-    private String authToken;
+    private String authtoken;
     private String username;
     private String personId;
     private boolean success;
@@ -29,8 +27,8 @@ public class RegisterResponse implements IResponse {
 
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
     public String getUsername() {

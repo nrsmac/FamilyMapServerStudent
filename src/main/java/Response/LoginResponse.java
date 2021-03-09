@@ -5,16 +5,16 @@ package Response;
  * A login response sent from the service to the handler
  */
 public class LoginResponse implements IResponse{
-    private String authToken;
+    private String authtoken;
     private String username;
-    private String personId;
+    private String personID;
     private final boolean success;
     private String message;
 
-    public LoginResponse(String authToken, String username, String personId, boolean success){
-        this.authToken = authToken;
+    public LoginResponse(String authtoken, String username, String personID, boolean success){
+        this.authtoken = authtoken;
         this.username = username;
-        this.personId = personId;
+        this.personID = personID;
         this.success = success;
     }
 
@@ -28,16 +28,16 @@ public class LoginResponse implements IResponse{
         this.message = message;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonID() {
+        return personID;
     }
 
     public boolean isSuccessful() {

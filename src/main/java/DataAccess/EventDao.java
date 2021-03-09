@@ -97,9 +97,6 @@ public class EventDao implements IDao{
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1, associatedUsername);
             rs = stmt.executeQuery();
-            if (!rs.next()) {
-                throw new DataAccessException("No events associated with associatedUsername");
-            }
             while (rs.next()){
                 Event event;
                 event = new Event(rs.getString("eventID"),

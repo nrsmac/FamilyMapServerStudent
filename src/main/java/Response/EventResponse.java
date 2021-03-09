@@ -5,7 +5,7 @@ import Model.Event;
 import java.util.ArrayList;
 
 public class EventResponse {
-    private ArrayList<Event> events;
+    private ArrayList<Event> data;
     private boolean success;
     private String message;
     private String associatedUsername;
@@ -18,8 +18,8 @@ public class EventResponse {
     private String eventType;
     private int year;
 
-    public EventResponse(ArrayList<Event> events, boolean success) {
-        this.events = events;
+    public EventResponse(ArrayList<Event> data, boolean success) {
+        this.data = data;
         this.success = success;
     }
 
@@ -51,8 +51,8 @@ public class EventResponse {
         this.success = success;
     }
 
-    public ArrayList<Event> getEvents() {
-        return events;
+    public ArrayList<Event> getData() {
+        return data;
     }
 
     public boolean isSuccess() {

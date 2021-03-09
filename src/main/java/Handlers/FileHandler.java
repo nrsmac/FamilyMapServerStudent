@@ -24,7 +24,6 @@ public class FileHandler implements HttpHandler{
         boolean success = false;
         //translate physical URLS into file paths
 
-
         //Get url from exchange object urlPath = httpExchange.getRequestURI()
             // set null or "/" to "/index.html"
         // Append urlPath to physical file name

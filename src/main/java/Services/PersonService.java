@@ -20,7 +20,7 @@ public class PersonService {
             EventDao eventDao = new EventDao(db.getConnection());
             AuthTokenDao authDao = new AuthTokenDao(db.getConnection());
 
-            String authKey = request.getAuthToken();
+            String authKey = request.getAuthtoken();
 
             try {
                 AuthToken authToken = authDao.findByAuthtoken(authKey);

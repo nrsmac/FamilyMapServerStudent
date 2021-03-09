@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class PersonResponse {
     private String message;
-    private ArrayList<Person> people;
+    private ArrayList<Person> data;
     private boolean success;
     private String associatedUsername;
-    private String personId;
+    private String personID;
     private String firstName;
     private String lastName;
     private String gender;
@@ -17,13 +17,13 @@ public class PersonResponse {
     private String motherID;
     private String spouseID;
 
-    public PersonResponse(ArrayList<Person> people, boolean success) {
-        this.people = people;
+    public PersonResponse(ArrayList<Person> data, boolean success) {
+        this.data = data;
         this.success = success;
     }
 
     public PersonResponse(String associatedUsername,
-                          String personId,
+                          String personID,
                           String firstName,
                           String lastName,
                           String gender,
@@ -32,7 +32,7 @@ public class PersonResponse {
                           String spouseID,
                           boolean success) {
         this.associatedUsername = associatedUsername;
-        this.personId = personId;
+        this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -51,8 +51,8 @@ public class PersonResponse {
         return message;
     }
 
-    public ArrayList<Person> getPeople() {
-        return people;
+    public ArrayList<Person> getData() {
+        return data;
     }
 
     public boolean isSuccess() {
@@ -63,8 +63,8 @@ public class PersonResponse {
         return associatedUsername;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonID() {
+        return personID;
     }
 
     public String getFirstName() {
