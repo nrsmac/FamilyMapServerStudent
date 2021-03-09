@@ -1,0 +1,32 @@
+[Mon Mar 08 22:59:51 MST 2021] - INFO passoff.ServerTest: 	Setting up Persistence Test...
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Proxy: 	Clear called
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Post without Request Body called
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Attempting to open connection to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connection opened to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Setting passoffrequest method to POST
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Request method set to POST
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Setting Do Output to true
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Do Output set to true
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connecting to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connected to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Getting response code from server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Response code 200 returned
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Getting input stream from server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Reading input stream into a string
+[Mon Mar 08 22:59:51 MST 2021] - INFO passoff.ServerTest: 	Running Persistence Test...
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Proxy: 	Load called
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Post with Request Body called
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Attempting to open connection to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connection opened to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Setting passoffrequest method to POST
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Request method set to POST
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Setting Do Output to true
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Do Output set to true
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connecting to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Connected to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Opening output stream to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Writing passoffrequest to server output stream
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Request written to server output stream
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Closing output stream to server
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Output stream to server closed
+[Mon Mar 08 22:59:51 MST 2021] - INFO client.Client: 	Getting response code from server

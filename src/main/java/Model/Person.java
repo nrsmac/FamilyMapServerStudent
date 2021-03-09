@@ -4,101 +4,112 @@ public class Person implements IModelElement{
     /**
      * person id
      */
-    private String person_id;
+    private String personID;
     /**
      * username associated with person
      */
-    private String username;
+    private String associatedUsername;
     /**
      * First name of person.
      */
-    private String first_name;
+    private String firstName;
     /**
      * Last name of person.
      */
-    private String last_name;
+    private String lastName;
     /**
      * ID of the father
      */
-    private String father_id;
+    private String fatherID;
     /**
      * ID Of the mother
      */
-    private String mother_id;
+    private String motherID;
     /**
      * ID of the spouse
      */
-    private String spouse_id;
+    private String spouseID;
     /**
      * "m" if male, "f" if female
      */
     private String gender;
 
-    public Person(String person_id,
-                  String username,
-                  String first_name,
-                  String last_name,
+    public Person(String personID,
+                  String associatedUsername,
+                  String firstName,
+                  String lastName,
                   String gender,
-                  String father_id,
-                  String mother_id,
-                  String spouse_id) {
-        this.person_id = person_id;
-        this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
+                  String fatherID,
+                  String motherID,
+                  String spouseID) {
+        this.personID = personID;
+        this.associatedUsername = associatedUsername;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
-        this.father_id = father_id;
-        this.mother_id = mother_id;
-        this.spouse_id = spouse_id;
+        this.fatherID = fatherID;
+        this.motherID = motherID;
+        this.spouseID = spouseID;
+    }
+
+    public Person(String personID, String associatedUsername, String firstName, String lastName, String gender) {
+        this.personID = personID;
+        this.associatedUsername = associatedUsername;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.fatherID = null;
+        this.motherID = null;
+        this.spouseID = null;
     }
 
     /**
      * @return the unique id associated with this person of a user's pedigree (not null)
      */
     public String getPersonId() {
-        return person_id;
+        return personID;
     }
 
     /**
      * @return the first name of this person (not null)
      */
     public String getFirstName() {
-        return first_name;
+        return firstName;
     }
 
     /**
      * @return the last name of this person (not null)
      */
     public String getLastName() {
-        return last_name;
+        return lastName;
     }
 
     /**
      * @return the id of this persons father (can be null)
      */
     public String getFatherId() {
-        return father_id;
+        return fatherID;
     }
 
     /**
      * @return the id of this persons father (can be null)
      */
     public String getMotherId() {
-        return mother_id;
+        return motherID;
     }
 
     /**
      * @return id of this persons spouse (can be null)
      */
     public String getSpouseId() {
-        return spouse_id;
+        return spouseID;
     }
 
     /**
      * @return the associated username with the element.
      */
-    public String getUsername() {
-        return this.username;
+    public String getAssociatedUsername() {
+        return this.associatedUsername;
     }
 
     public String getGender() {
@@ -117,6 +128,22 @@ public class Person implements IModelElement{
         } else {
             return false;
         }
+    }
+
+    public void setSpouseID(String spouseId){
+        this.spouseID = spouseId;
+    }
+
+    public void setFatherID(String fatherId){
+        this.fatherID = fatherId;
+    }
+
+    public void setMotherID(String motherId){
+        this.motherID = motherId;
+    }
+
+    public String getPersonID(){
+        return this.personID;
     }
 
 }

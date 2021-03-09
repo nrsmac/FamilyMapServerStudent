@@ -1,8 +1,10 @@
 package Services;
 
 import DataAccess.*;
-import Model.Model;
+import GenerateData.GeneratePeople;
 import Model.User;
+import Model.Person;
+
 import Model.AuthToken;
 import Request.RegisterRequest;
 import Response.RegisterResponse;
@@ -13,32 +15,10 @@ import java.util.UUID;
  * Processes registration via DAOs as directed by requests, and passes responses to the register handler
  */
 public class RegisterService {
-    private AuthTokenDao authDao;
-    private Database db;
-    /**
-     * The request from the handler
-     */
-    private RegisterRequest request;
     /**
      * The response back to the handler
      */
     private RegisterResponse response;
-    /**
-     * The model that will be interacted with. Populated in the constructor by the model in the request.
-     */
-    private Model model;
-    /**
-     * Person DAO
-     */
-    private PersonDao personDao;
-    /**
-     * User DAO
-     */
-    private UserDao userDao;
-    /**
-     * Event DAO
-     */
-    private EventDao eventDao;
 
     /**
      * Instantiates a new Register service.
@@ -46,14 +26,15 @@ public class RegisterService {
      * @param request the request
      */
     public RegisterService(RegisterRequest request) {
-        this.request = request;
         this.response = null;
-        db = new Database();
-        boolean success = false;
+        Database db = new Database();
         try {
-            userDao = new UserDao(db.getConnection());
-            authDao = new AuthTokenDao(db.getConnection());
-            String userId = UUID.randomUUID().toString();
+            UserDao userDao = new UserDao(db.getConnection());
+            PersonDao personDao = new PersonDao(db.getConnection());
+            EventDao eventDao = new EventDao(db.getConnection());
+
+            AuthTokenDao authDao = new AuthTokenDao(db.getConnection());
+            String userId = UUID.randomUUID().toString().substring(0,6);
             User user = new User(userId,
                     request.getUsername(),
                     request.getPassword(),
@@ -65,7 +46,16 @@ public class RegisterService {
                 AuthToken token = new AuthToken(request.getUsername(),UUID.randomUUID().toString());
                 userDao.insertUser(user);
                 authDao.add(token);
-                this.response = new RegisterResponse(token.getAuthToken(), user.getUsername(), userId, true);
+
+                Person self = new Person(userId,user.getUsername(),user.getFirstName(),user.getLastName(),user.getGender());
+                personDao.insertPerson(self);
+
+                GeneratePeople generatePeople = new GeneratePeople(4, user.getUsername());
+                for (Person p : generatePeople.getPersons()){
+                    personDao.insertPerson(p);
+                }
+
+                this.response = new RegisterResponse(token.getAuthToken(), user.getUsername(), self.getPersonId(), true);
             } else {
                 this.response = new RegisterResponse(false, "User already exists"); //user already exists
             }

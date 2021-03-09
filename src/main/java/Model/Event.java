@@ -4,19 +4,19 @@ package Model;
  * Represents a unique event which happened to a Person within a User's pedigree.
  */
 public class Event implements IModelElement{
-    private String person_id;
+    private String personID;
     /**
      * Unique event id identifier. Primary key.
      */
-    private String event_id;
+    private String eventID;
     /**
      *username associated with event
      */
-    private String username;
+    private String associatedUsername;
     /**
      * type of event
      */
-    private String event_type;
+    private String eventType;
     /**
      * latitude where event took place
      */
@@ -38,29 +38,37 @@ public class Event implements IModelElement{
      */
     private int year;
 
-    public Event(String eventId, String username, String personId, double latitude, double longitude, String country, String city, String event_type, int year) {
-        this.event_id = eventId;
-        this.username = username;
-        this.person_id = personId;
+    public Event(String eventId,
+                 String associatedUsername,
+                 String personId,
+                 double latitude,
+                 double longitude,
+                 String country,
+                 String city,
+                 String eventType,
+                 int year) {
+        this.eventID = eventId;
+        this.associatedUsername = associatedUsername;
+        this.personID = personId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.country = country;
         this.city = city;
-        this.event_type = event_type;
+        this.eventType = eventType;
         this.year = year;
     }
 
     /**
      * @return the unique id of this event
      */
-    public String getEvent_id() {
-        return event_id;
+    public String getEventID() {
+        return eventID;
     }
 
     /**
      * @return the person associated with this event
      */
-    public String getPerson_id(){return person_id;}
+    public String getPersonID(){return personID;}
 
     /**
      * @return the latitude where this event occurred
@@ -93,8 +101,8 @@ public class Event implements IModelElement{
     /**
      * @return the type of event this event is
      */
-    public String getEvent_type() {
-        return event_type;
+    public String getEventType() {
+        return eventType;
     }
 
     /**
@@ -107,8 +115,8 @@ public class Event implements IModelElement{
     /**
      * @return the associated username with the element.
      */
-    public String getUsername() {
-        return this.username;
+    public String getAssociatedUsername() {
+        return this.associatedUsername;
     }
 
     public int hashCode(){
@@ -127,7 +135,7 @@ public class Event implements IModelElement{
         }
         if (o instanceof Event){
             Event oPerson = (Event) o;
-            return oPerson.getEvent_id().equals(getEvent_id());
+            return oPerson.getEventID().equals(getEventID());
         } else {
             return false;
         }

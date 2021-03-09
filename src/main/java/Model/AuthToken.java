@@ -39,5 +39,5 @@ public class AuthToken implements IModelElement{
     public String getAuthToken() {
         return this.auth_token;
     }
-    public String getUsername() { return this.username; }
+    public String getAssociatedUsername() { return this.username; }
 }

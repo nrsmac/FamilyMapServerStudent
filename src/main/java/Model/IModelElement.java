@@ -9,7 +9,7 @@ public interface IModelElement {
     /**
      * @return the associated username with the element.
      */
-    default String getUsername(){
+    default String getAssociatedUsername(){
         return this.username;
     }
     String toString();

@@ -6,24 +6,23 @@ import Model.Model;
  * A login request sent from the handler to the service
  */
 public class LoginRequest implements IRequest{
-    /**
-     * A convenient place to access the model.
-     */
-    private Model model;
+
+    private final String password;
+    private final String username;
 
     /**
      * Creates a new request.
-     * @param model
      */
-    public LoginRequest(Model model) {
-        this.model = model;
+    public LoginRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    /**
-     * Returns the model passed by the handler.
-     * @return
-     */
-    public Model getRequestModel(){
-        return this.model;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -25,17 +25,18 @@ public class EventDao implements IDao{
      * @param event the event to be added
      */
     public void insertEvent(Event event) throws DataAccessException {
-        String sql = "INSERT INTO events (event_id, username, person_id, event_type, latitude, longitude, country, city, year) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO events (eventID, associatedUsername, personID, eventType, latitude, longitude, country, city, year) VALUES(?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setString(1, event.getEvent_id());
-            stmt.setString(2, event.getUsername());
-            stmt.setString(3,event.getPerson_id());
-            stmt.setString(4, event.getEvent_type());
+            stmt.setString(1, event.getEventID());
+            stmt.setString(2, event.getAssociatedUsername());
+            stmt.setString(3,event.getPersonID());
+            stmt.setString(4, event.getEventType());
             stmt.setDouble(5, event.getLatitude());
             stmt.setDouble(6, event.getLongitude());
             stmt.setString(7, event.getCountry());
             stmt.setString(8, event.getCity());
             stmt.setInt(9, event.getYear());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error inserting into events");
@@ -44,26 +45,26 @@ public class EventDao implements IDao{
 
     /**
      * Find an event in database given id
-     * @param event_id  to find
+     * @param eventID  to find
      * @return found event
      * @throws DataAccessException on sql exception
      */
-    public Event findByEventId(String event_id) throws DataAccessException{
+    public Event findByEventId(String eventID) throws DataAccessException{
         Event event = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM events WHERE event_id =?;";
+        String sql = "SELECT * FROM events WHERE eventID =?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setString(1, event_id);
+            stmt.setString(1, eventID);
             rs = stmt.executeQuery();
             if (rs.next()){
-                event = new Event(rs.getString("event_id"),
-                        rs.getString("username"),
-                        rs.getString("person_id"),
-                        rs.getDouble("event_type"),
+                event = new Event(rs.getString("eventID"),
+                        rs.getString("associatedUsername"),
+                        rs.getString("personID"),
                         rs.getDouble("latitude"),
-                        rs.getString("longitude"),
+                        rs.getDouble("longitude"),
                         rs.getString("country"),
                         rs.getString("city"),
+                        rs.getString("eventType"),
                         rs.getInt("year"));
                 return event;
             }
@@ -84,31 +85,31 @@ public class EventDao implements IDao{
     }
 
     /**
-     * Find an event in database given username
-     * @param username  to find
+     * Find an event in database given associatedUsername
+     * @param associatedUsername  to find
      * @return found event
      * @throws DataAccessException on sql exception
      */
-    public ArrayList<Event> findByUser(String username) throws DataAccessException{
+    public ArrayList<Event> findByUser(String associatedUsername) throws DataAccessException{
         ArrayList<Event> events = new ArrayList<Event>();
         ResultSet rs = null;
-        String sql = "SELECT * FROM events WHERE username =?;";
+        String sql = "SELECT * FROM events WHERE associatedUsername =?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setString(1, username);
+            stmt.setString(1, associatedUsername);
             rs = stmt.executeQuery();
             if (!rs.next()) {
-                throw new DataAccessException("No events associated with username");
+                throw new DataAccessException("No events associated with associatedUsername");
             }
             while (rs.next()){
                 Event event;
-                event = new Event(rs.getString("event_id"),
-                        rs.getString("username"),
-                        rs.getString("person_id"),
-                        rs.getDouble("event_type"),
+                event = new Event(rs.getString("eventID"),
+                        rs.getString("associatedUsername"),
+                        rs.getString("personID"),
                         rs.getDouble("latitude"),
-                        rs.getString("longitude"),
+                        rs.getDouble("longitude"),
                         rs.getString("country"),
                         rs.getString("city"),
+                        rs.getString("eventType"),
                         rs.getInt("year"));
                 events.add(event);
             }
@@ -136,7 +137,7 @@ public class EventDao implements IDao{
     public ArrayList<Event> findByPersonId(String personId) throws DataAccessException{
         ArrayList<Event> events = new ArrayList<Event>();
         ResultSet rs = null;
-        String sql = "SELECT * FROM events WHERE person_id =?;";
+        String sql = "SELECT * FROM events WHERE personID =?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1, username);
             rs = stmt.executeQuery();
@@ -145,10 +146,10 @@ public class EventDao implements IDao{
             }
             while (rs.next()){
                 Event event;
-                event = new Event(rs.getString("event_id"),
-                        rs.getString("username"),
-                        rs.getString("person_id"),
-                        rs.getDouble("event_type"),
+                event = new Event(rs.getString("eventID"),
+                        rs.getString("associatedUsername"),
+                        rs.getString("personID"),
+                        rs.getDouble("eventType"),
                         rs.getDouble("latitude"),
                         rs.getString("longitude"),
                         rs.getString("country"),

@@ -1,15 +1,11 @@
 package DataAccess;
 
-import Model.Model;
 import Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeSet;
 
 /**
  * Interacts with the user table in the database via JDBC.
@@ -28,14 +24,14 @@ public class UserDao implements IDao{
      * @param user the user to be added
      */
     public void insertUser(User user) throws DataAccessException {
-        String sql = "INSERT INTO users (user_id, username, password, email, first_name, last_name, gender) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO users (personID, username, password, email, firstName, lastName, gender) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getUser_id());
+            stmt.setString(1, user.getPersonId());
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getEmail());
-            stmt.setString(5, user.getFirst_name());
-            stmt.setString(6, user.getLast_name());
+            stmt.setString(5, user.getFirstName());
+            stmt.setString(6, user.getLastName());
             stmt.setString(7, user.getGender());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -53,17 +49,17 @@ public class UserDao implements IDao{
     public User find(String user_id) throws DataAccessException{
         User user = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM users WHERE user_id =?;";
+        String sql = "SELECT * FROM users WHERE personID =?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1, user_id);
             rs = stmt.executeQuery();
             if (rs.next()){
-                user = new User(rs.getString("user_id"),
+                user = new User(rs.getString("personID"),
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("email"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
                         rs.getString("gender"));
                 return user;
             }
@@ -119,12 +115,12 @@ public class UserDao implements IDao{
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
                 rs = stmt.executeQuery();
                 while (rs.next()){
-                    User daoUser = new User(rs.getString("user_id"),
+                    User daoUser = new User(rs.getString("personID"),
                             rs.getString("username"),
                             rs.getString("password"),
                             rs.getString("email"),
-                            rs.getString("first_name"),
-                            rs.getString("last_name"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
                             rs.getString("gender"));
                     if(daoUser.equals(user)){
                         contains = true;
@@ -135,28 +131,30 @@ public class UserDao implements IDao{
             e.printStackTrace();
             throw new DataAccessException();
         }
-
         return contains;
     }
 
-//    public String generateUserId() throws DataAccessException {
-//        ArrayList<Integer> ids = new ArrayList<>();
-//        ids.add(0);
-//        ResultSet rs = null;
-//        String sql = "SELECT * FROM users";
-//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-//            rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                ids.add(Integer.parseInt(rs.getString("user_id")));
-//                //TODO: assert this is always an integer!!!!
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new DataAccessException();
-//        }
-//        Collections.sort(ids);
-//        int highest_id = ids.get(ids.size()-1);
-//        highest_id++;
-//        return highest_id + "";
-//    };
+    public String getIdByUsername(String username) throws DataAccessException {
+        ResultSet rs = null;
+        String sql = "SELECT * FROM users";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            rs = stmt.executeQuery();
+            while (rs.next()){
+                User daoUser = new User(rs.getString("personID"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("gender"));
+                if(daoUser.getUsername().equalsIgnoreCase(username)){
+                    return daoUser.getPersonId();
+                }
+            }
+            throw new DataAccessException("Username not found");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException();
+        }
+    }
 }

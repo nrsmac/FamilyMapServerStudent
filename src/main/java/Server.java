@@ -51,11 +51,11 @@ public class Server {
         server.createContext("/user/register", new RegisterHandler());
         server.createContext("/user/login", new LoginHandler());
         server.createContext("/clear", new ClearHandler());
-        server.createContext("/fill/[username]/{generations}", new FillHandler()); //username, generations
+        server.createContext("/fill", new FillHandler()); //username, generations
         server.createContext("/load", new LoadHandler());
-        server.createContext("/person/[person_id]", new PersonHandler());//pass in person ID for one person
-        server.createContext("/person", new PersonHandler()); // all persons of current user, determined by auth token
-        server.createContext("/event/[event_id]", new EventHandler()); //returns specific event
+        server.createContext("/person", new PersonHandler());//pass in person ID for one person
+//        server.createContext("/person", new PersonHandler()); // all persons of current user, determined by auth token
+//        server.createContext("/event/[event_id]", new EventHandler()); //returns specific event
         server.createContext("/event", new EventHandler()); // all events of all family members of current user
 
         System.out.println("Starting server");

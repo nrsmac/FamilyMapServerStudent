@@ -1,33 +1,50 @@
 package Response;
 
-import Model.Model;
-
 
 /**
  * A login response sent from the service to the handler
  */
 public class LoginResponse implements IResponse{
-    /**
-     * Represents the model passed from the service
-     */
-    private Model model;
+    private String authToken;
+    private String username;
+    private String personId;
+    private final boolean success;
+    private String message;
 
-
-    /**
-     * Instantiates a new Login response.
-     *
-     * @param model the model passed from the service.
-     */
-    public LoginResponse(Model model){
-        this.model = model;
+    public LoginResponse(String authToken, String username, String personId, boolean success){
+        this.authToken = authToken;
+        this.username = username;
+        this.personId = personId;
+        this.success = success;
     }
 
+
     /**
-     * Gets response model.
-     *
-     * @return the response model
+     * @param message
+     * @param success
      */
-    public Model getResponseModel() {
-        return this.model;
+    public LoginResponse(String message, boolean success) {
+        this.success = success;
+        this.message = message;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public boolean isSuccessful() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

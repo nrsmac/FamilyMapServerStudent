@@ -16,8 +16,8 @@ class GenerateEventsTest {
     GeneratePeople people;
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
-        people = new GeneratePeople(20);
+    void setUp() {
+        people = new GeneratePeople(20,"nrsmac");
         generatedEvents = new GenerateEvents(people.getPersons());
     }
 

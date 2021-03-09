@@ -11,8 +11,6 @@ public class GeneratePeople {
     private static final String SNAMES = "json/snames.json";
     private static final String MNAMES = "json/mnames.json";
 
-    private ArrayList<String> ACCEPTABLE_USERNAMES = new ArrayList<>();
-
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> surnames = new ArrayList<>();
     private ArrayList<String> fNames = new ArrayList<>();
@@ -24,14 +22,10 @@ public class GeneratePeople {
      */
     private LinkedList<Integer> ids;
 
-    public GeneratePeople(int number) throws FileNotFoundException {
-        File mNamesFile = new File(FNAMES);
-        File fNamesFile = new File(MNAMES);
+    public GeneratePeople(int number, String username) {
+        File mNamesFile = new File(MNAMES);
+        File fNamesFile = new File(FNAMES);
         File surnamesFile = new File(SNAMES);
-
-        ACCEPTABLE_USERNAMES.add("nrsmac");
-        ACCEPTABLE_USERNAMES.add("bella");
-        ACCEPTABLE_USERNAMES.add("teej");
 
         populateList(mNamesFile, this.mNames);
         populateList(fNamesFile, this.fNames);
@@ -43,20 +37,19 @@ public class GeneratePeople {
             this.ids.add(i);
         }
 
-        generatePersons(number);
+        generatePersons(number, username);
     }
 
-    private void generatePersons(int numberOfPeople) {
+    private void generatePersons(int numberOfPeople, String username) {
         persons = new ArrayList<>();
 
         for (int i = 0; i < numberOfPeople; i++) {
-            persons.add(generatePerson());
+            persons.add(generatePerson(username));
         }
     }
 
-    public Person generatePerson() {
+    public Person generatePerson(String username) {
         String person_id;
-        String username;
         String firstname;
         String surname;
         String gender;
@@ -65,8 +58,6 @@ public class GeneratePeople {
         String spouse_id = null;
 
         Random rand = new Random();
-
-        username = this.ACCEPTABLE_USERNAMES.get(rand.nextInt(ACCEPTABLE_USERNAMES.size()));
 
         Collections.shuffle(this.ids);
         int id = this.ids.pop();
@@ -87,15 +78,21 @@ public class GeneratePeople {
             firstname = this.fNames.get(firstNameIdx);
             gender = "f";
         }
-         surname = this.surnames.get(surnameIdx);
+        surname = this.surnames.get(surnameIdx);
 
         return new Person(person_id,username,firstname,surname,gender,father_id,mother_id,spouse_id);
     }
 
-    private void populateList(File file, ArrayList<String> list) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file);
-        while(scanner.hasNext()){
-            list.add(scanner.next());
+    private void populateList(File file, ArrayList<String> list) {
+
+        try {
+            Scanner scanner = null;
+            scanner = new Scanner(file);
+            while(scanner.hasNext()){
+                list.add(scanner.next());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

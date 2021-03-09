@@ -57,7 +57,7 @@ class EventDaoTest {
                 "m");
 
 
-        GeneratePeople people = new GeneratePeople(20);
+        GeneratePeople people = new GeneratePeople(20,"nrsmac");
         GenerateEvents events = new GenerateEvents(people.getPersons());
 
         e1 = events.getEvents().get(0);
@@ -87,7 +87,7 @@ class EventDaoTest {
     @Test
     void insertEvent() throws DataAccessException {
         eDao.insertEvent(e1);
-        Event test = eDao.findByEventId(e1.getEvent_id());
+        Event test = eDao.findByEventId(e1.getEventID());
         assertNotNull(test);
         assertEquals(e1, test);
     }
@@ -96,8 +96,8 @@ class EventDaoTest {
     void findByEventId() throws DataAccessException {
         eDao.insertEvent(e1);
         eDao.insertEvent(e2);
-        Event test1 = eDao.findByEventId(e1.getEvent_id());
-        Event test2 = eDao.findByEventId(e2.getEvent_id());
+        Event test1 = eDao.findByEventId(e1.getEventID());
+        Event test2 = eDao.findByEventId(e2.getEventID());
         assertNotNull(test1);
         assertNotNull(test2);
         assertEquals(e1, test1);
@@ -106,17 +106,21 @@ class EventDaoTest {
 
     @Test
     void findByUser() {
+        //TODO Implement
     }
 
     @Test
     void findByPersonId() {
+        //TODO Implement
     }
 
     @Test
     void clearEvents() {
+        //TODO Implement
     }
 
     @Test
     void getEventCount() {
+        //TODO Implement
     }
 }

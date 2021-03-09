@@ -5,10 +5,7 @@ import Model.Person;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class GenerateEvents {
     private static final String LOCATIONS = "json/locations.json";
@@ -21,6 +18,9 @@ public class GenerateEvents {
     private ArrayList<Person> persons;
 
     public ArrayList<Event> getEvents() {
+
+
+
         return events;
     }
 
@@ -39,14 +39,13 @@ public class GenerateEvents {
         for (Person p : persons){
             generateBirth(p);
             generateBaptism(p);
-            generateMarriage(p);
             generateDeath(p);
         }
     }
 
     private void generateBirth(Person person) {
         String eventId;
-        String username = person.getUsername();
+        String username = person.getAssociatedUsername();
         String personId = person.getPersonId();
         String eventType = "birth";
         double latitude;
@@ -73,7 +72,7 @@ public class GenerateEvents {
     }
     private void generateDeath(Person person) {
         String eventId;
-        String username = person.getUsername();
+        String username = person.getAssociatedUsername();
         String personId = person.getPersonId();
         String eventType = "death";
         double latitude;
@@ -87,6 +86,7 @@ public class GenerateEvents {
         eventId = id+"";
 
         GeneratedLocation location = generateLocation();
+        assert location != null;
         latitude=location.getLatitude();
         longitude=location.getLongitude();
         country = location.getCountry();
@@ -107,7 +107,7 @@ public class GenerateEvents {
         boolean isMarried = rand.nextBoolean();// 5050 chance of getting married
         if(isMarried){
             String eventId;
-            String username = person.getUsername();
+            String username = person.getAssociatedUsername();
             String personId = person.getPersonId();
             String eventType = "marriage";
             double latitude;
@@ -130,7 +130,7 @@ public class GenerateEvents {
         boolean isBaptized = rand.nextBoolean();// 5050 chance of getting baptized
         if(isBaptized){
             String eventId;
-            String username = person.getUsername();
+            String username = person.getAssociatedUsername();
             String personId = person.getPersonId();
             String eventType = "baptism";
             double latitude;
@@ -169,10 +169,47 @@ public class GenerateEvents {
     private int getBirthYear(Person person) {
         int birthYear = 0;
         for (Event event : this.events){
-            if(event.getPerson_id() == person.getPersonId() && event.getEvent_type().equals("birth")){
+            if(event.getPersonID() == person.getPersonId() && event.getEventType().equals("birth")){
                 birthYear = event.getYear();
             }
         }
         return birthYear;
+    }
+
+    public HashMap<String, Event> marry(Person m, Person f, int year){
+        HashMap<String,Event> marriages = new HashMap<>();
+
+        Collections.shuffle(this.ids);
+        int id = this.ids.pop();
+        String eventId = id+"";
+
+        GeneratedLocation location = generateLocation();
+        assert location != null;
+        Event marriageM = new Event(eventId,
+                m.getAssociatedUsername(),
+                m.getPersonId(),
+                location.getLatitude(),
+                location.getLongitude(),
+                location.getCountry(),
+                location.getCity(),
+                "marriage",
+                year);
+        marriages.put("m",marriageM);
+
+        Event marriageF = new Event(eventId,
+                f.getAssociatedUsername(),
+                f.getPersonId(),
+                location.getLatitude(),
+                location.getLongitude(),
+                location.getCountry(),
+                location.getCity(),
+                "marriage",
+                year);
+        marriages.put("f",marriageF);
+
+        m.setSpouseID(f.getPersonID());
+        f.setSpouseID(m.getSpouseId());
+
+        return marriages;
     }
 }

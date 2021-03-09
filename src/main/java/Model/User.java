@@ -20,11 +20,11 @@ public class User implements IModelElement{
     /**
      * first name of user
      */
-    private String first_name;
+    private String firstName;
     /**
      * last name of user
      */
-    private String last_name;
+    private String lastName;
     /**
      * Gender of user "m" if male, "f" if female
      */
@@ -32,23 +32,23 @@ public class User implements IModelElement{
     /**
      * ID of user
      */
-    private String user_id;
+    private String personID;
 
-    public User(String user_id,
+    public User(String personID,
                 String username,
                 String password,
                 String email,
-                String first_name,
-                String last_name,
+                String firstName,
+                String lastName,
                 String gender
                 ) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
-        this.user_id = user_id;
+        this.personID = personID;
     }
     /**
      * @return the password of the user
@@ -67,15 +67,15 @@ public class User implements IModelElement{
     /**
      * @return the first name of the user
      */
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
      * @return the last name of the user
      */
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
@@ -88,8 +88,8 @@ public class User implements IModelElement{
     /**
      * @return the unique user id of the user which relates to Person and Event objects
      */
-    public String getUser_id() {
-        return user_id;
+    public String getPersonId() {
+        return personID;
     }
 
     /**
@@ -118,8 +118,8 @@ public class User implements IModelElement{
             return
                     oUser.getUsername().equals(getUsername()) &&
                     oUser.getEmail().equals(getEmail()) &&
-                    oUser.getFirst_name().equals(getFirst_name())&&
-                    oUser.getLast_name().equals(getLast_name())&&
+                    oUser.getFirstName().equals(getFirstName())&&
+                    oUser.getLastName().equals(getLastName())&&
                     oUser.getGender().equals(getGender());
         } else {
             return false;

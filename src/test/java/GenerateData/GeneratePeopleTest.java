@@ -15,7 +15,7 @@ class GeneratePeopleTest {
 
     @BeforeEach
     void setUp() throws FileNotFoundException {
-        generatePeople = new GeneratePeople(20);
+        generatePeople = new GeneratePeople(4, "nrsmac");
         ArrayList<Person> persons = generatePeople.getPersons();
     }
 
