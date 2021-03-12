@@ -129,7 +129,6 @@ public class Event implements IModelElement{
 
     @Override
     public boolean equals(Object o){
-        //TODO maybe more intense here
         if (o==null){
             return false;
         }

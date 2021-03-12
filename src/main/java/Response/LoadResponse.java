@@ -13,9 +13,9 @@ public class LoadResponse {
         this.personCount = personCount;
         this.eventCount = eventCount;
         this.success = success;
-        this.message = "Successfully added \n " +
-                userCount + " users\n" +
-                personCount + " persons\n" +
+        this.message = "Successfully added " +
+                userCount + " users, " +
+                personCount + " persons," +
                 " and " + eventCount + " events to the database.";
     }
 

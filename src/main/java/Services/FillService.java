@@ -54,12 +54,13 @@ public class FillService {
                         user.getFirstName(),
                         user.getLastName(),
                         user.getGender());
+                personDao.insertPerson(userPerson);
                 GeneratePeople generatePeople = new GeneratePeople();
-                HashMap<String, HashSet<?>> data = generatePeople.generations(userPerson,this.generations); //TODO fix
+                HashMap<String, HashSet<?>> data = generatePeople.generations(userPerson,this.generations);
                 HashSet<Person> persons = (HashSet<Person>) data.get("persons");
                 HashSet<Event> events = (HashSet<Event>) data.get("events");
 
-                int personCount = 0;
+                int personCount = 1;
                 int eventCount = 0;
                 for (Person p : persons){
 

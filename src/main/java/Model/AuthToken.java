@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-
 /**
  * Represents an authToken locally within the model.
  */
@@ -32,7 +30,6 @@ public class AuthToken implements IModelElement{
      * @return an an authToken which has not already been used
      */
     public static String generateAuthToken(){
-        //TODO: search usedAuthTokens with already used authTokens
         return "";
     }
 
@@ -40,4 +37,22 @@ public class AuthToken implements IModelElement{
         return this.auth_token;
     }
     public String getAssociatedUsername() { return this.username; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AuthToken authToken = (AuthToken) o;
+
+        if (username != null ? !username.equals(authToken.username) : authToken.username != null) return false;
+        return auth_token != null ? auth_token.equals(authToken.auth_token) : authToken.auth_token == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (auth_token != null ? auth_token.hashCode() : 0);
+        return result;
+    }
 }

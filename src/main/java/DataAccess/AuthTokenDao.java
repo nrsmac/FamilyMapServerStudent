@@ -89,13 +89,6 @@ public class AuthTokenDao implements IDao{
         }
     }
 
-    public int hashCode(){
-        return 0;
-    }
-
-    public String toString(){
-        return "";
-    }
 
     public void clearTokens() throws DataAccessException {
         String sql = "DELETE FROM authtokens";

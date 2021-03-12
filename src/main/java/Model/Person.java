@@ -112,7 +112,6 @@ public class Person implements IModelElement{
 
     @Override
     public boolean equals(Object o){
-        //TODO maybe more intense here
         if (o==null){
             return false;
         }
@@ -140,4 +139,12 @@ public class Person implements IModelElement{
         return this.personID;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personID='" + personID + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

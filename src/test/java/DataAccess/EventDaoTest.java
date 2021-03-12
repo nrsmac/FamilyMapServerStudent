@@ -147,7 +147,6 @@ class EventDaoTest {
 
     @Test
     void findByUserFail() throws DataAccessException {
-        //TODO Implement
         User user1 = new User("777",
                 "nrsmac",
                 "4821",

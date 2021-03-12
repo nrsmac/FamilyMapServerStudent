@@ -30,7 +30,7 @@ public class GenerateEvents {
 
     }
 
-    public Event generateBirth(Person person) {
+    public Event generateBirth(Person person, int year) {
         String eventId;
         String username = person.getAssociatedUsername();
         String personId = person.getPersonID();
@@ -39,7 +39,6 @@ public class GenerateEvents {
         double longitude;
         String country;
         String city;
-        int year;
 
         Collections.shuffle(this.ids);
         int id = this.ids.pop();
@@ -50,9 +49,6 @@ public class GenerateEvents {
         longitude=location.getLongitude();
         country = location.getCountry();
         city = location.getCity();
-
-        Random rand = new Random();//TODO check parents birthdays
-        year = rand.nextInt((2021-1600)+1)+1600;
 
         return new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
     }
@@ -164,12 +160,16 @@ public class GenerateEvents {
 
         HashSet<Event> marriages = new HashSet<>();
         Collections.shuffle(this.ids);
-        int id = this.ids.pop();
-        String eventId = id+"";
+        int mID = this.ids.pop();
+        int fID = this.ids.pop();
+
+        String maleID = mID+"";
+        String femaleID = fID+"";
+
 
         GeneratedLocation location = generateLocation();
         assert location != null;
-        Event marriageM = new Event(eventId,
+        Event marriageM = new Event(maleID,
                 m.getAssociatedUsername(),
                 m.getPersonID(),
                 location.getLatitude(),
@@ -180,7 +180,7 @@ public class GenerateEvents {
                 year);
         marriages.add(marriageM);
 
-        Event marriageF = new Event(eventId,
+        Event marriageF = new Event(femaleID,
                 f.getAssociatedUsername(),
                 f.getPersonID(),
                 location.getLatitude(),
@@ -192,7 +192,7 @@ public class GenerateEvents {
         marriages.add(marriageF);
 
         m.setSpouseID(f.getPersonID());
-        f.setSpouseID(m.getSpouseID());
+        f.setSpouseID(m.getPersonID());
         return marriages;
     }
 }

@@ -70,7 +70,6 @@ public class Server {
      * The default port is 8080.
      */
     public static void main(String[] args) {
-        //TODO Test for default port number
         String portNumber = args[0];
         new Server().run(portNumber);
     }

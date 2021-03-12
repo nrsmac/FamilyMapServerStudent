@@ -52,12 +52,12 @@ public class RegisterService {
                 authDao.add(token);
 
                 Person self = new Person(userId,user.getUsername(),user.getFirstName(),user.getLastName(),user.getGender());
-                personDao.insertPerson(self);
 
                 GeneratePeople generatePeople = new GeneratePeople();
                 HashMap<String, HashSet<?>> data = generatePeople.generations(self,4); //4 generations of people
                 HashSet<Person> persons = (HashSet<Person>) data.get("persons");
                 HashSet<Event> events = (HashSet<Event>) data.get("events");
+                personDao.insertPerson(self);
 
                 for (Person p : persons){
                     try {

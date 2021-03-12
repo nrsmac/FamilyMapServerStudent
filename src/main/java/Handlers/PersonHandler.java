@@ -1,5 +1,6 @@
 package Handlers;
 
+import DataAccess.DataAccessException;
 import Request.PersonsRequest;
 import Response.PersonsResponse;
 import Services.PersonsService;
@@ -32,7 +33,7 @@ public class PersonHandler implements HttpHandler {
                     PersonsService service = null;
                     try {
                         service = new PersonsService(request);
-                    } catch (Exception e) {
+                    } catch (DataAccessException e) {
                         e.printStackTrace();
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                     }

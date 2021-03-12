@@ -47,11 +47,9 @@ public class EventService {
                                 event.getYear(),
                                 true
                         );
-                        db.closeConnection(false);
 
                     } else {
                         this.response = new EventResponse("Error: Event not found", false);
-                        db.closeConnection(false);
 
                     }
                 }

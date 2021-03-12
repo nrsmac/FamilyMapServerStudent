@@ -1,5 +1,6 @@
 package Handlers;
 
+import DataAccess.DataAccessException;
 import Request.RegisterRequest;
 import Response.RegisterResponse;
 import Services.RegisterService;
@@ -15,7 +16,7 @@ import java.net.HttpURLConnection;
 public class RegisterHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+        if (exchange.getRequestMethod().equalsIgnoreCase("post")) {
             Headers reqHeaders = exchange.getRequestHeaders();
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = Codex.readString(reqBody);
@@ -24,7 +25,7 @@ public class RegisterHandler implements HttpHandler {
             RegisterService service = null;
             try {
                 service = new RegisterService(request);
-            } catch (Exception e) {
+            } catch (DataAccessException e) {
                 e.printStackTrace();
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
             }

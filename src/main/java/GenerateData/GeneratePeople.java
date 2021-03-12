@@ -74,13 +74,14 @@ public class GeneratePeople {
 
     }
 
-    public HashMap<String, HashSet<?>> generateImmediateFamily(Person person){
+    public HashMap<String, HashSet<?>> generateImmediateFamily(Person person, int year){
 
         HashMap<String, HashSet<?>> data = new HashMap<>();
         HashSet<Event> events = new HashSet<>();
         HashSet<Person> persons = new HashSet<>();
 
-        Event birth = generateEvents.generateBirth(person);
+
+        Event birth = generateEvents.generateBirth(person, year);
         Person father = generatePerson(person.getAssociatedUsername(),"m");
         Person mother = generatePerson(person.getAssociatedUsername(), "f");
         person.setFatherID(father.getPersonID());
@@ -89,17 +90,17 @@ public class GeneratePeople {
         persons.add(father);
         persons.add(mother);
 
-        int birth_year = birth.getYear(); //TODO fix -> parents bday is 30yrs before that, no need to be random, fixed
 
-        int marriageYear =  birth_year-30;
+
+        int marriageYear =  birth.getYear()-1;
         HashSet<Event> marriages = generateEvents.marry(father,mother, marriageYear);
 
         for (Event e:marriages){events.add(e);}
 
-        if (birth_year>90){
-            Event death = generateEvents.generateDeath(person, birth_year);
+
+            Event death = generateEvents.generateDeath(person, birth.getYear()-90);
             events.add(death);
-        }
+
 
 
         data.put("persons", persons);
@@ -108,35 +109,44 @@ public class GeneratePeople {
     }
 
     public HashMap<String, HashSet<?>> generations(Person person, int generations){
-        HashMap<String, HashSet<?>> data = generateImmediateFamily(person);
+        HashMap<String, HashSet<?>> initData = generateImmediateFamily(person,2000);
+        HashMap<String, HashSet<?>> outData = new HashMap<>();
+        HashSet<Person> outPeople = new HashSet<Person>((HashSet<Person>) initData.get("persons"));
+        HashSet<Event> outEvents = new HashSet<Event>((HashSet<Event>) initData.get("events"));
 
+        HashSet<Person> genPeople = (HashSet<Person>) initData.get("persons");
+        HashSet<Person> newGenPeople = new HashSet<>();
+        int year = 1985;
         for(int i = 0; i<generations; i++){
-            HashSet<Event> events = (HashSet<Event>) data.get("events");
-            HashSet<Person> persons = (HashSet<Person>) data.get("persons");
+            for(Person p: genPeople){
 
-            HashSet<Person> newPersons = new HashSet<>();
-            HashSet<Event> newEvents = new HashSet<>();
-
-            for (Person p: persons){
-                HashMap<String,HashSet<?>> genData = generateImmediateFamily(p);
-                HashSet<Person> genPersons = (HashSet<Person>) genData.get("persons");
-                HashSet<Event> genEvents = (HashSet<Event>) genData.get("events");
-                for (Person per:genPersons){
-                    newPersons.add(per);
+                HashMap<String, HashSet<?>> newData = generateImmediateFamily(p,year);
+                for(Object per : newData.get("persons")){
+                    newGenPeople.add((Person) per);
                 }
-                for(Event e : genEvents){
-                    newEvents.add(e);
+                for(Object event : newData.get("events")){
+                    outEvents.add((Event) event);
                 }
             }
 
-            data.put("persons",newPersons);
-            data.put("events",newEvents);
-        }
-        if(data != null){
-            return data;
+            for(Person p: genPeople){
+                if (i==generations-1){
+                    p.setMotherID(null);
+                    p.setFatherID(null);
+                }
+                outPeople.add(p);
+            }
 
+            genPeople = (HashSet<Person>) newGenPeople.clone();
+            newGenPeople.clear();
+            year = year - 20;
         }
-        return null;
+        
+        outData.put("persons", outPeople);
+        outData.put("events",outEvents);
+
+
+        return outData;
     }
 
     private void populateList(File file, ArrayList<String> list) {

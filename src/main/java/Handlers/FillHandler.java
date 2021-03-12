@@ -1,5 +1,6 @@
 package Handlers;
 
+import DataAccess.DataAccessException;
 import Request.FillRequest;
 import Response.FillResponse;
 import Services.FillService;
@@ -37,7 +38,7 @@ public class FillHandler implements HttpHandler {
 
                 try {
                     service = new FillService(request);
-                } catch (Exception e) { //TODO fix
+                } catch (DataAccessException e) {
                     e.printStackTrace();
 //                    System.out.println(e.getMessage());
                 }
