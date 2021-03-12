@@ -15,7 +15,7 @@ public class LoginService {
     private LoginResponse response;
 
 
-    public LoginService(LoginRequest request){
+    public LoginService(LoginRequest request) throws DataAccessException {
 
         this.response = null;
         Database db = new Database();
@@ -28,11 +28,13 @@ public class LoginService {
             if(request.getPassword().equals(daoPassword)) {
                 this.response = new LoginResponse(authToken,request.getUsername(),userId,true);
             } else {
-                this.response = new LoginResponse("Invalid password", false);
+                this.response = new LoginResponse("Error: Invalid password", false);
             }
+            db.closeConnection(true);
         } catch (DataAccessException e) {
-            this.response = new LoginResponse("User not found", false);
+            this.response = new LoginResponse("Error: User not found", false);
             e.printStackTrace();
+            db.closeConnection(false);
         }
     }
 

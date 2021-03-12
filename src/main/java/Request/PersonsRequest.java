@@ -1,14 +1,14 @@
 package Request;
 
-public class PersonRequest {
+public class PersonsRequest {
     private String authtoken;
     private String personID;
 
-    public PersonRequest(String authtoken) {
+    public PersonsRequest(String authtoken) {
         this.authtoken = authtoken;
     }
 
-    public PersonRequest(String authtoken, String personID) {
+    public PersonsRequest(String authtoken, String personID) {
         this.authtoken = authtoken;
         this.personID = personID;
     }

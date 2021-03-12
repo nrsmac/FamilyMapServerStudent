@@ -1,7 +1,6 @@
 package DataAccess;
 
 import Model.Person;
-import Model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +65,7 @@ class PersonDaoTest {
     @Test
     void insertPerson() throws DataAccessException {
         pDao.insertPerson(person1);
-        Person test = pDao.find(person1.getPersonId());
+        Person test = pDao.find(person1.getPersonID());
         assertNotNull(test);
         assertEquals(person1, test);
     }
@@ -80,7 +79,7 @@ class PersonDaoTest {
     @Test
     void find() throws DataAccessException {
         pDao.insertPerson(person1);
-        Person test = pDao.find(person1.getPersonId());
+        Person test = pDao.find(person1.getPersonID());
         assertNotNull(test);
         assertEquals(person1, test);
     }
@@ -88,7 +87,7 @@ class PersonDaoTest {
     @Test
     void findFail() throws DataAccessException {
         Person personNotThere = person4;
-        assertThrows(DataAccessException.class, ()-> pDao.find(personNotThere.getPersonId()));
+        assertThrows(DataAccessException.class, ()-> pDao.find(personNotThere.getPersonID()));
     }
 
     @Test

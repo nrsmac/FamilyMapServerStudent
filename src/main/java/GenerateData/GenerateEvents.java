@@ -4,8 +4,12 @@ import Model.Event;
 import Model.Person;
 import com.google.gson.Gson;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GenerateEvents {
     private static final String LOCATIONS = "json/locations.json";
@@ -15,20 +19,8 @@ public class GenerateEvents {
      */
     private LinkedList<Integer> ids;
 
-    private ArrayList<Person> persons;
 
-    public ArrayList<Event> getEvents() {
-
-
-
-        return events;
-    }
-
-    private ArrayList<Event> events;
-
-    public GenerateEvents(ArrayList<Person> persons){
-        this.persons = persons;
-        this.events = new ArrayList<>();
+    public GenerateEvents(){
 
         this.ids = new LinkedList<>();
 
@@ -36,17 +28,12 @@ public class GenerateEvents {
             this.ids.add(i);
         }
 
-        for (Person p : persons){
-            generateBirth(p);
-            generateBaptism(p);
-            generateDeath(p);
-        }
     }
 
-    private void generateBirth(Person person) {
+    public Event generateBirth(Person person) {
         String eventId;
         String username = person.getAssociatedUsername();
-        String personId = person.getPersonId();
+        String personId = person.getPersonID();
         String eventType = "birth";
         double latitude;
         double longitude;
@@ -67,13 +54,12 @@ public class GenerateEvents {
         Random rand = new Random();//TODO check parents birthdays
         year = rand.nextInt((2021-1600)+1)+1600;
 
-        Event event = new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
-        events.add(event);
+        return new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
     }
-    private void generateDeath(Person person) {
+    public Event generateDeath(Person person, int birthYear) {
         String eventId;
         String username = person.getAssociatedUsername();
-        String personId = person.getPersonId();
+        String personId = person.getPersonID();
         String eventType = "death";
         double latitude;
         double longitude;
@@ -92,23 +78,20 @@ public class GenerateEvents {
         country = location.getCountry();
         city = location.getCity();
 
-        int birthYear = getBirthYear(person);
 
         Random rand = new Random();
-        year = rand.nextInt((2021-birthYear)+1)+birthYear;
+        year = birthYear - 90;
 
-
-        Event event = new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
-        events.add(event);
+        return new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
     }
 
-    private void generateMarriage(Person person) {
+    public void generateMarriage(Person person, int birthYear) {
         Random rand = new Random();
         boolean isMarried = rand.nextBoolean();// 5050 chance of getting married
         if(isMarried){
             String eventId;
             String username = person.getAssociatedUsername();
-            String personId = person.getPersonId();
+            String personId = person.getPersonID();
             String eventType = "marriage";
             double latitude;
             double longitude;
@@ -116,36 +99,46 @@ public class GenerateEvents {
             String city;
             String year;
 
+            GeneratedLocation location = generateLocation();
+            assert location != null;
+            latitude=location.getLatitude();
+            longitude=location.getLongitude();
+            country = location.getCountry();
+            city = location.getCity();
+
             Collections.shuffle(this.ids);
             int id = this.ids.pop();
             eventId = id+"";
 
-            int birthYear = getBirthYear(person);
             year = rand.nextInt((2021-birthYear+15)+1)+birthYear+15 + "";
         }
     }
 
-    private void generateBaptism(Person person) {
+    public Event generateBaptism(Person person, int birthYear, int deathYear) {
         Random rand = new Random();
-        boolean isBaptized = rand.nextBoolean();// 5050 chance of getting baptized
-        if(isBaptized){
             String eventId;
             String username = person.getAssociatedUsername();
-            String personId = person.getPersonId();
+            String personId = person.getPersonID();
             String eventType = "baptism";
             double latitude;
             double longitude;
             String country;
             String city;
-            String year;
+            int year;
+
+            GeneratedLocation location = generateLocation();
+            assert location != null;
+         latitude=location.getLatitude();
+        longitude=location.getLongitude();
+        country = location.getCountry();
+        city = location.getCity();
 
             Collections.shuffle(this.ids);
             int id = this.ids.pop();
             eventId = id+"";
 
-            int birthYear = getBirthYear(person);
-            year = rand.nextInt((2021-birthYear+8)+1)+birthYear+8 + "";
-        }
+            year = ThreadLocalRandom.current().nextInt(birthYear, deathYear);
+        return new Event(eventId,username,personId,latitude,longitude,country,city,eventType,year);
     }
 
 
@@ -166,19 +159,10 @@ public class GenerateEvents {
         return null;
     }
 
-    private int getBirthYear(Person person) {
-        int birthYear = 0;
-        for (Event event : this.events){
-            if(event.getPersonID() == person.getPersonId() && event.getEventType().equals("birth")){
-                birthYear = event.getYear();
-            }
-        }
-        return birthYear;
-    }
 
-    public HashMap<String, Event> marry(Person m, Person f, int year){
-        HashMap<String,Event> marriages = new HashMap<>();
+    public HashSet<Event> marry(Person m, Person f, int year){
 
+        HashSet<Event> marriages = new HashSet<>();
         Collections.shuffle(this.ids);
         int id = this.ids.pop();
         String eventId = id+"";
@@ -187,29 +171,28 @@ public class GenerateEvents {
         assert location != null;
         Event marriageM = new Event(eventId,
                 m.getAssociatedUsername(),
-                m.getPersonId(),
+                m.getPersonID(),
                 location.getLatitude(),
                 location.getLongitude(),
                 location.getCountry(),
                 location.getCity(),
                 "marriage",
                 year);
-        marriages.put("m",marriageM);
+        marriages.add(marriageM);
 
         Event marriageF = new Event(eventId,
                 f.getAssociatedUsername(),
-                f.getPersonId(),
+                f.getPersonID(),
                 location.getLatitude(),
                 location.getLongitude(),
                 location.getCountry(),
                 location.getCity(),
                 "marriage",
                 year);
-        marriages.put("f",marriageF);
+        marriages.add(marriageF);
 
         m.setSpouseID(f.getPersonID());
-        f.setSpouseID(m.getSpouseId());
-
+        f.setSpouseID(m.getSpouseID());
         return marriages;
     }
 }

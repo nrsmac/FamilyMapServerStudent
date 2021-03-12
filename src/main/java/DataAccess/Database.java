@@ -74,7 +74,8 @@ public class Database {
                     "DELETE FROM users; " +
                     "DELETE FROM events;" +
                     "DELETE FROM persons;" +
-                    "DELETE FROM auth_tokens;";
+                    "DELETE FROM auth" +
+                    "tokens;";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

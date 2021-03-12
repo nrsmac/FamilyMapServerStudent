@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,17 +18,18 @@ class GenerateEventsTest {
 
     @BeforeEach
     void setUp() {
-        people = new GeneratePeople(20,"nrsmac");
-        generatedEvents = new GenerateEvents(people.getPersons());
+        people = new GeneratePeople();
+        generatedEvents = new GenerateEvents();
     }
 
     @AfterEach
     void tearDown() {
+
     }
 
     @Test
     void generateEvents() {
-        ArrayList<Event> events = generatedEvents.getEvents();
-        assertNotNull(events);
+//        TreeSet<Event> events = people.getEvents();
+//        assertNotNull(events);
     }
 }

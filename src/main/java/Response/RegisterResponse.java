@@ -4,10 +4,10 @@ package Response;
  * A register response sent from the service to the handler
  */
 public class RegisterResponse implements IResponse {
-    public RegisterResponse(String authtoken, String username, String personId, boolean success) {
+    public RegisterResponse(String authtoken, String username, String personID, boolean success) {
         this.authtoken = authtoken;
         this.username = username;
-        this.personId = personId;
+        this.personID = personID;
         this.success = success;
     }
 
@@ -18,7 +18,7 @@ public class RegisterResponse implements IResponse {
 
     private String authtoken;
     private String username;
-    private String personId;
+    private String personID;
     private boolean success;
 
     private String message;
@@ -35,8 +35,8 @@ public class RegisterResponse implements IResponse {
         return username;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonID() {
+        return personID;
     }
 
     public boolean isSuccess() {

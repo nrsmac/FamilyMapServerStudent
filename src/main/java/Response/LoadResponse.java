@@ -1,7 +1,5 @@
 package Response;
 
-import Request.LoadRequest;
-
 public class LoadResponse {
     private int userCount;
     private int personCount;
@@ -15,7 +13,7 @@ public class LoadResponse {
         this.personCount = personCount;
         this.eventCount = eventCount;
         this.success = success;
-        this.message = "Successfully added:\n " +
+        this.message = "Successfully added \n " +
                 userCount + " users\n" +
                 personCount + " persons\n" +
                 " and " + eventCount + " events to the database.";

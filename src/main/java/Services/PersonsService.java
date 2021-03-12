@@ -3,15 +3,15 @@ package Services;
 import DataAccess.*;
 import Model.AuthToken;
 import Model.Person;
-import Request.PersonRequest;
-import Response.PersonResponse;
+import Request.PersonsRequest;
+import Response.PersonsResponse;
 
 import java.util.ArrayList;
 
-public class PersonService {
-    private PersonResponse response;
+public class PersonsService {
+    private PersonsResponse response;
 
-    public PersonService(PersonRequest request){
+    public PersonsService(PersonsRequest request) throws DataAccessException {
         this.response = null;
         Database db = new Database();
         try{
@@ -31,43 +31,44 @@ public class PersonService {
 
                     people = personDao.getPeople(username);
                     if(people != null){
-                        this.response = new PersonResponse(people,true);
+                        this.response = new PersonsResponse(people,true);
                     } else {
-                        this.response = new PersonResponse(false, "No people with token");
+                        this.response = new PersonsResponse(false, "Error: No people with token");
                     }
                 } else {
                     Person person = personDao.find(request.getPersonID());
                     if(person != null && person.getAssociatedUsername().equals(username)){
-                        this.response = new PersonResponse(person.getAssociatedUsername(),
-                                person.getPersonId(),
+                        this.response = new PersonsResponse(person.getAssociatedUsername(),
+                                person.getPersonID(),
                                 person.getFirstName(),
                                 person.getLastName(),
                                 person.getGender(),
-                                person.getFatherId(),
-                                person.getMotherId(),
-                                person.getSpouseId(),
+                                person.getFatherID(),
+                                person.getMotherID(),
+                                person.getSpouseID(),
                                 true);
                     } else {
-                        this.response = new PersonResponse(false, "No person with associated with username");
+                        this.response = new PersonsResponse(false, "Error: No person with associated with username");
                     }
                 }
+                db.closeConnection(true);
 
             } catch (DataAccessException e) {
-                System.out.println("Invalid authtoken");
+                System.out.println("Person not found");
                 e.printStackTrace();
-                this.response = new PersonResponse(false, "Error getting people");
-
+                this.response = new PersonsResponse(false, "Error:  getting people");
+                db.closeConnection(false);
             }
-            db.closeConnection(true);
 
         } catch (DataAccessException e) {
             System.out.println("Error opening dao");
-            this.response = new PersonResponse(false, "Error getting people");
+            this.response = new PersonsResponse(false, "Error: getting people");
             e.printStackTrace();
+            db.closeConnection(false);
         }
     }
 
-    public PersonResponse getResponse() {
+    public PersonsResponse getResponse() {
         return this.response;
     }
 }

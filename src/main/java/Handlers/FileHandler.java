@@ -6,11 +6,8 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class FileHandler implements HttpHandler{
@@ -38,8 +35,7 @@ public class FileHandler implements HttpHandler{
                 }
                 String filePath = "web" + urlPath;
                 File file = new File(filePath);
-                File fourOFour = new File("HTML/404");
-//                File fourOFive = new File("HTML/404");
+                File fourOFour = new File("web/HTML/404.html");
 
                 if (file.exists()){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
@@ -48,7 +44,7 @@ public class FileHandler implements HttpHandler{
                     respBody.close();
                 } else {
                     //404
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND,0);
                     OutputStream respBody = exchange.getResponseBody();
                     Files.copy(fourOFour.toPath(), respBody);
                     respBody.close();

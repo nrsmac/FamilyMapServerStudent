@@ -1,29 +1,26 @@
 package Request;
 
-import Model.Model;
-
 /**
  *  A fill request sent from the handler to the service
  */
 public class FillRequest implements IRequest{
-    /**
-     * A convenient place to access the model.
-     */
-    private Model model;
+    private String username;
+    private int generations = 4;
 
-    /**
-     * Creates a new request.
-     * @param model
-     */
-    public FillRequest(Model model) {
-        this.model = model;
+    public FillRequest(String username, int generations) {
+        this.username = username;
+        this.generations = generations;
     }
 
-    /**
-     * Returns the model passed by the handler.
-     * @return
-     */
-    public Model getRequestModel(){
-        return this.model;
+    public FillRequest(String username) {
+        this.username = username;
+    }
+
+    public int getGenerations() {
+        return generations;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

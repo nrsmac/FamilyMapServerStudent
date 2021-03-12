@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class EventService {
     EventResponse response;
 
-    public EventService(EventRequest request) {
+    public EventService(EventRequest request) throws DataAccessException {
         this.response = null;
         Database db = new Database();
         try{
@@ -30,7 +30,7 @@ public class EventService {
                     if(events != null){
                         this.response = new EventResponse(events, true);
                     } else {
-                        this.response = new EventResponse("No events associated with users",false );
+                        this.response = new EventResponse("Error: No events associated with users",false );
                     }
                 } else {
                     Event event = eDao.findByEventId(request.getEventID());
@@ -47,14 +47,19 @@ public class EventService {
                                 event.getYear(),
                                 true
                         );
+                        db.closeConnection(false);
+
                     } else {
-                        this.response = new EventResponse("Event not found", false);
+                        this.response = new EventResponse("Error: Event not found", false);
+                        db.closeConnection(false);
+
                     }
                 }
-
+            db.closeConnection(false);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            this.response = new EventResponse("Issue getting events.",false);
+            this.response = new EventResponse("Error: Issue getting events.",false);
+            db.closeConnection(false);
         }
     }
 

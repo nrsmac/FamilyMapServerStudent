@@ -63,12 +63,6 @@ public class Person implements IModelElement{
         this.spouseID = null;
     }
 
-    /**
-     * @return the unique id associated with this person of a user's pedigree (not null)
-     */
-    public String getPersonId() {
-        return personID;
-    }
 
     /**
      * @return the first name of this person (not null)
@@ -87,21 +81,21 @@ public class Person implements IModelElement{
     /**
      * @return the id of this persons father (can be null)
      */
-    public String getFatherId() {
+    public String getFatherID() {
         return fatherID;
     }
 
     /**
      * @return the id of this persons father (can be null)
      */
-    public String getMotherId() {
+    public String getMotherID() {
         return motherID;
     }
 
     /**
      * @return id of this persons spouse (can be null)
      */
-    public String getSpouseId() {
+    public String getSpouseID() {
         return spouseID;
     }
 
@@ -124,7 +118,7 @@ public class Person implements IModelElement{
         }
         if (o instanceof Person){
             Person oPerson = (Person) o;
-            return oPerson.getPersonId().equals(getPersonId());
+            return oPerson.getPersonID().equals(getPersonID());
         } else {
             return false;
         }

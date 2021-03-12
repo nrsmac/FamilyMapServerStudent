@@ -47,4 +47,8 @@ public class LoginResponse implements IResponse{
     public String getMessage() {
         return message;
     }
+
+    public boolean isSuccess() {
+        return this.success;
+    }
 }

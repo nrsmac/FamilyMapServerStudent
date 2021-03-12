@@ -2,13 +2,15 @@ package Services;
 
 import DataAccess.*;
 import GenerateData.GeneratePeople;
-import Model.User;
-import Model.Person;
-
 import Model.AuthToken;
+import Model.Event;
+import Model.Person;
+import Model.User;
 import Request.RegisterRequest;
 import Response.RegisterResponse;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 /**
@@ -25,7 +27,7 @@ public class RegisterService {
      *
      * @param request the request
      */
-    public RegisterService(RegisterRequest request) {
+    public RegisterService(RegisterRequest request) throws DataAccessException {
         this.response = null;
         Database db = new Database();
         try {
@@ -34,6 +36,7 @@ public class RegisterService {
             EventDao eventDao = new EventDao(db.getConnection());
 
             AuthTokenDao authDao = new AuthTokenDao(db.getConnection());
+
             String userId = UUID.randomUUID().toString().substring(0,6);
             User user = new User(userId,
                     request.getUsername(),
@@ -42,6 +45,7 @@ public class RegisterService {
                     request.getFirstName(),
                     request.getLastName(),
                     request.getGender());
+
             if(!userDao.containsUser(user)){
                 AuthToken token = new AuthToken(request.getUsername(),UUID.randomUUID().toString());
                 userDao.insertUser(user);
@@ -50,20 +54,33 @@ public class RegisterService {
                 Person self = new Person(userId,user.getUsername(),user.getFirstName(),user.getLastName(),user.getGender());
                 personDao.insertPerson(self);
 
-                GeneratePeople generatePeople = new GeneratePeople(4, user.getUsername());
-                for (Person p : generatePeople.getPersons()){
-                    personDao.insertPerson(p);
+                GeneratePeople generatePeople = new GeneratePeople();
+                HashMap<String, HashSet<?>> data = generatePeople.generations(self,4); //4 generations of people
+                HashSet<Person> persons = (HashSet<Person>) data.get("persons");
+                HashSet<Event> events = (HashSet<Event>) data.get("events");
+
+                for (Person p : persons){
+                    try {
+                        personDao.insertPerson(p);
+                    } catch (DataAccessException e){
+                        continue;
+                    }
+                }
+                for (Event e : events){
+                    eventDao.insertEvent(e);
                 }
 
-                this.response = new RegisterResponse(token.getAuthToken(), user.getUsername(), self.getPersonId(), true);
+                db.closeConnection(true);
+                this.response = new RegisterResponse(token.getAuthToken(), user.getUsername(), self.getPersonID(), true);
             } else {
-                this.response = new RegisterResponse(false, "User already exists"); //user already exists
+                db.closeConnection(false);
+                this.response = new RegisterResponse(false, "Error: User already exists"); //user already exists
             }
-            db.closeConnection(true);
-            //TODO handle incorrect user values
+
         } catch (DataAccessException e) {
             //Send other error response;
-            this.response = new RegisterResponse(false, "Error adding user"); //user already exists
+            this.response = new RegisterResponse(false, "Error: SQL Error" + e.getMessage()); //user already exists
+            db.closeConnection(false);
         }
 
     }

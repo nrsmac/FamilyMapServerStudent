@@ -4,7 +4,7 @@ import Model.Person;
 
 import java.util.ArrayList;
 
-public class PersonResponse {
+public class PersonsResponse {
     private String message;
     private ArrayList<Person> data;
     private boolean success;
@@ -17,20 +17,20 @@ public class PersonResponse {
     private String motherID;
     private String spouseID;
 
-    public PersonResponse(ArrayList<Person> data, boolean success) {
+    public PersonsResponse(ArrayList<Person> data, boolean success) {
         this.data = data;
         this.success = success;
     }
 
-    public PersonResponse(String associatedUsername,
-                          String personID,
-                          String firstName,
-                          String lastName,
-                          String gender,
-                          String fatherID,
-                          String motherID,
-                          String spouseID,
-                          boolean success) {
+    public PersonsResponse(String associatedUsername,
+                           String personID,
+                           String firstName,
+                           String lastName,
+                           String gender,
+                           String fatherID,
+                           String motherID,
+                           String spouseID,
+                           boolean success) {
         this.associatedUsername = associatedUsername;
         this.personID = personID;
         this.firstName = firstName;
@@ -42,7 +42,7 @@ public class PersonResponse {
         this.success = success;
     }
 
-    public PersonResponse(boolean success, String message) {
+    public PersonsResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
@@ -89,5 +89,17 @@ public class PersonResponse {
 
     public String getSpouseID() {
         return spouseID;
+    }
+
+    public Person getPerson(String personID){
+        Person person = null;
+        if (data != null){
+            for(Person p : data){
+                if(p.getPersonID().equals(personID)){
+                    person = p;
+                }
+            }
+        }
+        return person;
     }
 }

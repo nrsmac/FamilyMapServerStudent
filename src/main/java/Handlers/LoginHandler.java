@@ -1,9 +1,8 @@
 package Handlers;
 
+import DataAccess.DataAccessException;
 import Request.LoginRequest;
-import Request.RegisterRequest;
 import Response.LoginResponse;
-import Response.RegisterResponse;
 import Services.LoginService;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -23,10 +22,20 @@ public class LoginHandler implements HttpHandler {
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = Codex.readString(reqBody);
                 LoginRequest request = Json.deserialize(reqData,LoginRequest.class);
-                LoginService service = new LoginService(request);
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+            LoginService service = null;
+            try {
+                service = new LoginService(request);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            }
 
-                LoginResponse response = service.getResponse();
+            LoginResponse response = service.getResponse();
+            if (response.isSuccess()){
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+            } else {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            }
                 String respData = Json.serialize(response);
                 OutputStream respBody = exchange.getResponseBody();
                 Codex.writeString(respData, respBody);

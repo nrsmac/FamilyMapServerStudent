@@ -67,12 +67,14 @@ public class EventDao implements IDao{
                         rs.getString("eventType"),
                         rs.getInt("year"));
                 return event;
+
             }
             throw new DataAccessException("Requested event not found");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Issue retrieving event from database");
         } finally {
+
             if (rs != null){
                 try{
                     rs.close();
@@ -109,11 +111,15 @@ public class EventDao implements IDao{
                         rs.getString("eventType"),
                         rs.getInt("year"));
                 events.add(event);
+
+            }
+            if (events.size() ==0){
+                throw new DataAccessException("No events with username");
             }
             return events;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("Issue retrieving event from database");
+            throw new DataAccessException("Issue retrieving event from database" + e.getMessage());
         } finally {
             if (rs != null){
                 try{
@@ -179,6 +185,16 @@ public class EventDao implements IDao{
         } catch (SQLException e){
             e.printStackTrace();
             throw new DataAccessException("Issue clearing events");
+        }
+    }
+
+    public void clearEventsWithUsername(String username) throws DataAccessException {
+        String sql = "DELETE FROM events WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

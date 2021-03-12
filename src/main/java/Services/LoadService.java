@@ -16,8 +16,9 @@ public class LoadService {
 
     private LoadRequest request;
     private LoadResponse response;
+    private Database db;
 
-    public LoadService(LoadRequest request) {
+    public LoadService(LoadRequest request) throws DataAccessException {
         this.request = request;
 
         ArrayList<User> users;
@@ -31,8 +32,8 @@ public class LoadService {
         pushToDaos(users,persons,events);
     }
 
-    private void pushToDaos(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) {
-        Database db = new Database();
+    private void pushToDaos(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) throws DataAccessException {
+        db = new Database();
         try {
             Connection conn = db.getConnection();
             UserDao uDao = new UserDao(conn);
@@ -68,7 +69,8 @@ public class LoadService {
             this.response = new LoadResponse(uCount,pCount,eCount,true);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            this.response = new LoadResponse("Failed to load JSON into database.", false);
+            this.response = new LoadResponse("Error: FAILED to load JSON into database. "+e.getMessage(), false);
+            db.closeConnection(false);
         }
     }
 

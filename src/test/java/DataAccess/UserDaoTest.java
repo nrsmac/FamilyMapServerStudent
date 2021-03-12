@@ -31,7 +31,7 @@ class UserDaoTest {
     @Test
     void insertPass() throws DataAccessException {
         uDao.insertUser(bestUser);
-        User compareTest = uDao.find(bestUser.getPersonId());
+        User compareTest = uDao.find(bestUser.getPersonID());
         assertNotNull(compareTest);
         assertEquals(bestUser, compareTest);
     }
@@ -46,7 +46,7 @@ class UserDaoTest {
     @Test
     void findPass() throws DataAccessException {
         uDao.insertUser(bestUser);
-        User test = uDao.find(bestUser.getPersonId());
+        User test = uDao.find(bestUser.getPersonID());
         assertNotNull(test);
         assertEquals(bestUser, test);
     }
@@ -54,7 +54,7 @@ class UserDaoTest {
     @Test
     void findFail() throws DataAccessException {
         User userNotThere = new User("1234","s2cool","4821","shaun@shaun.com","Shaun","the Sheep","m");
-        assertThrows(DataAccessException.class, ()-> uDao.find(userNotThere.getPersonId()));
+        assertThrows(DataAccessException.class, ()-> uDao.find(userNotThere.getPersonID()));
     }
 
     @Test

@@ -30,18 +30,18 @@ public class PersonDao implements IDao{
     public void insertPerson(Person person) throws DataAccessException {
         String sql = "INSERT INTO persons (personID, associatedUsername, firstName, lastName, gender, fatherID, motherID, spouseID) VALUES(?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, person.getPersonId());
+            stmt.setString(1, person.getPersonID());
             stmt.setString(2, person.getAssociatedUsername());
             stmt.setString(3, person.getFirstName());
             stmt.setString(4, person.getLastName());
             stmt.setString(5, person.getGender());
-            stmt.setString(6, person.getFatherId());
-            stmt.setString(7, person.getMotherId());
-            stmt.setString(8, person.getSpouseId());
+            stmt.setString(6, person.getFatherID());
+            stmt.setString(7, person.getMotherID());
+            stmt.setString(8, person.getSpouseID());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("Error while inserting into Users");
+            throw new DataAccessException("Error while inserting into persons" + e.getMessage());
         }
     }
 
@@ -95,6 +95,16 @@ public class PersonDao implements IDao{
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException();
+        }
+    }
+
+    public void clearPersonWithUsername(String username) throws DataAccessException {
+        String sql = "DELETE FROM persons WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

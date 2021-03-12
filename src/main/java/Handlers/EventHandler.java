@@ -1,5 +1,6 @@
 package Handlers;
 
+import DataAccess.DataAccessException;
 import Request.EventRequest;
 import Response.EventResponse;
 import Services.EventService;
@@ -29,10 +30,19 @@ public class EventHandler implements HttpHandler {
                     request = new EventRequest(reqHeaders.get("Authorization").get(0), eventID);
                 }
 
-                EventService service = new EventService(request);
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                EventService service = null;
+                try {
+                    service = new EventService(request);
+                } catch (DataAccessException e) {
+                    e.printStackTrace();
+                }
 
                 EventResponse response = service.getResponse();
+                if (response.isSuccess()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                } else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                }
                 String respData = Json.serialize(response);
                 OutputStream respBody = exchange.getResponseBody();
                 Codex.writeString(respData,respBody);

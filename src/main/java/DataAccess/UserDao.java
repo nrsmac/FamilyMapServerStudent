@@ -26,7 +26,7 @@ public class UserDao implements IDao{
     public void insertUser(User user) throws DataAccessException {
         String sql = "INSERT INTO users (personID, username, password, email, firstName, lastName, gender) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getPersonId());
+            stmt.setString(1, user.getPersonID());
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getEmail());
@@ -36,7 +36,7 @@ public class UserDao implements IDao{
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("Error while inserting into Users");
+            throw new DataAccessException("Error while inserting into Users: " + e.getMessage());
         }
     }
 
@@ -63,10 +63,10 @@ public class UserDao implements IDao{
                         rs.getString("gender"));
                 return user;
             }
-            throw new DataAccessException();
+            throw new DataAccessException("User not found");
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("Issue retrieving user from database");
+            throw new DataAccessException("Issue retrieving user from database" + e.getMessage());
         } finally {
             if (rs!=null){
 
@@ -148,7 +148,7 @@ public class UserDao implements IDao{
                         rs.getString("lastName"),
                         rs.getString("gender"));
                 if(daoUser.getUsername().equalsIgnoreCase(username)){
-                    return daoUser.getPersonId();
+                    return daoUser.getPersonID();
                 }
             }
             throw new DataAccessException("Username not found");

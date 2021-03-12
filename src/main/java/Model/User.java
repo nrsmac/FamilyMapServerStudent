@@ -88,7 +88,7 @@ public class User implements IModelElement{
     /**
      * @return the unique user id of the user which relates to Person and Event objects
      */
-    public String getPersonId() {
+    public String getPersonID() {
         return personID;
     }
 

@@ -1,33 +1,22 @@
 package Response;
 
-import Model.Model;
-
 /**
  *  A Fill response sent from the service to the handler
  */
 public class FillResponse implements IResponse{
+    private String message;
+    private boolean success;
 
-    /**
-     * Represents the model passed from the service
-     */
-    private Model model;
-
-
-    /**
-     * Instantiates a new Fill response.
-     *
-     * @param model the model passed from the service.
-     */
-    public FillResponse(Model model){
-        this.model = model;
+    public FillResponse(String message, boolean success) {
+        this.message = message;
+        this.success = success;
     }
 
-    /**
-     * Gets response model.
-     *
-     * @return the response model
-     */
-    public Model getResponseModel() {
-        return this.model;
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
